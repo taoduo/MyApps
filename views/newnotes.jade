@@ -1,0 +1,14 @@
+extends newnoteform
+
+block content
+	form(role='form' method="post" name='note' action="/newnotes")
+		.form-group
+			h3#tag(name='tag') EXP
+		.form-group
+			h1#title(name='title') Default_Title
+		.form-group
+			h3#keywords(name='keywords') Default_Keywords,
+		.form-group
+			textarea#mytextarea(name='details') Default_Details
+		.form-group
+			button.btn.btn-success(type='submit' accesskey='X') Submit

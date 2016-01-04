@@ -1,0 +1,40 @@
+doctype html
+html
+	head
+		title Duo: An Ambitious Tech Geek
+		script(src='/jquery/dist/jquery.min.js' type='text/javascript')
+		link(rel='stylesheet' href="/bootstrap/dist/css/bootstrap.min.css")
+		link(rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css")
+		script(src="/bootstrap/dist/js/bootstrap.min.js" type='text/javascript')
+		script(src="http://code.jquery.com/ui/1.11.4/jquery-ui.js" type='text/javascript')
+body
+	.row
+		#checkmynotes.col-md-4
+			center
+				h1 NOTES?
+		#checkmyschedule.col-md-4
+			center
+				h1 SCHEDULE?
+		#contactme.col-md-3
+			center
+				h1 CONTACT?
+	script(type='text/javascript').
+		function init() {
+			$('#checkmynotes').hide();
+			$('#checkmyschedule').hide();
+			$('#contactme').hide();
+		}
+		init();
+		$(window).load(function(){
+			$("#checkmynotes").show("bounce", {
+				times: 5, 
+				complete: function() {
+					$("#checkmyschedule").show("bounce", {times: 5,
+						complete:function() {
+							$('#contactme').show('bounce', {times: 5}, 1000);
+						}
+					}, 1000);
+				}
+			}, 1000);
+		});
+
