@@ -9,14 +9,18 @@ html
 		script(src='/jquery-form/jquery.form.js')
 		script(type='text/javascript').
 			//configure the initial values of the edit form for different notes
-			$(document).on('click', '.editbtn', function() {
+			$(document).on('click', '.editbtn', function(e) {
 				var tag = $(this).data('tag');
 				var title = $(this).data('title');
 				var details = $(this).data('details');
 				var keywords = $(this).data('keywords');
 				var id = $(this).data('id');
 				var date = new Date(Date.parse($(this).data('date')));
-				console.log($('#editform #t'));
+				if($('#editform').length) {
+					$('#editform').show();
+				} else {
+					alert('it does not exist');
+				}
 				$('#editform #tag').val(tag);
 				$('#editform #title').val(title);
 				tinyMCE.activeEditor.setContent(details);
@@ -25,9 +29,14 @@ html
 			});
 			//get ready for submit
 			$(document).ready(function(){
-				var options = {
-					target:'#editform',
-					success: function(responseText, statusText, xhr, $form) {
+				$('#editform').submit(function(event) {
+					//submit the form
+					event.preventDefault();
+					var thisForm=$(this);
+					var formUrl='http://localhost:3000/checknotes';
+					var dataToSend=thisForm.serialize();
+					var callBack=function(responseText) {
+						console.log(3);
 						var date = new Date(Date.parse(responseText.date));
 						var datestr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 						var keywords = responseText.keywords;
@@ -39,50 +48,47 @@ html
 						}
 						$('#' + responseText._id + 'date').html(datestr);
 						$('#noteslist').prepend($('#' + responseText._id));
-
-					},
-					url: 'http://localhost:3000/checknotes',
-					type: 'post',
-				};
-				$('#editform').submit(function() {
-					$(this).ajaxSubmit(options);
+					};
+					var rtnType="html";
+					$.post(formUrl,dataToSend,callBack);
 					return false;
 				});
+				//initialize the tinymce textarea in the modal
+				tinymce.init({
+					setup: function(editor) {
+						editor.on('focus', function() {
+							if(editor.getContent() === '<p>Default_Details</p>')
+							editor.setContent('');
+						});
+						editor.on('blur', function() {
+							if(editor.getContent() === '') {
+								editor.setContent('Default_Details');
+							};
+						});
+					},
+					theme: 'modern',
+					selector: '#details',
+					height: 250,
+					paste_data_images: true,
+					plugins: [
+					'advlist autolink lists link image charmap preview hr anchor pagebreak',
+					'searchreplace wordcount visualblocks visualchars code fullscreen',
+					'insertdatetime media nonbreaking save table contextmenu directionality',
+					'emoticons template paste textcolor colorpicker textpattern imagetools'
+					],
+					menu: [],
+					toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor',
+					image_advtab: true,
+					templates: [
+					{ title: 'Test template 1', content: 'Test 1' },
+					{ title: 'Test template 2', content: 'Test 2' }
+					],
+					content_css: [
+					'/stylesheets/tinymce.css',
+					]
+				});
 			});
-			//initialize the tinymce textarea in the modal
-			tinymce.init({
-				setup: function(editor) {
-					editor.on('focus', function() {
-						if(editor.getContent() === '<p>Default_Details</p>')
-						editor.setContent('');
-					});
-					editor.on('blur', function() {
-						if(editor.getContent() === '') {
-							editor.setContent('Default_Details');
-						};
-					});
-				},
-				theme: 'modern',
-				selector: '#details',
-				height: 250,
-				paste_data_images: true,
-				plugins: [
-				'advlist autolink lists link image charmap preview hr anchor pagebreak',
-				'searchreplace wordcount visualblocks visualchars code fullscreen',
-				'insertdatetime media nonbreaking save table contextmenu directionality',
-				'emoticons template paste textcolor colorpicker textpattern imagetools'
-				],
-				menu: [],
-				toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor',
-				image_advtab: true,
-				templates: [
-				{ title: 'Test template 1', content: 'Test 1' },
-				{ title: 'Test template 2', content: 'Test 2' }
-				],
-				content_css: [
-				'/stylesheets/tinymce.css',
-				]
-			});
+
 			//delete a note
 			function del(id, title) {
 				$.ajax({
@@ -93,6 +99,7 @@ html
 						alert('Are you sure to delete ' + title + '?');
 					},
 					success: function(data) {
+						console.log('haha');
 						if(data === 'deleted') {
 							$('#' + id).remove();
 						} else if(data === 'err') {
@@ -154,5 +161,5 @@ html
 								.col-sm-10
 									textarea#details.form-control(name='details')
 					.modal-footer
-						input#submitButton.btn.btn-success(data-dismiss='modal' onclick='formSubmit()' type='button' value='Submit')
-						input.btn.btn-default(data-dismiss='modal' type='button' value='Close')
+						button#submitButton.btn.btn-success(data-dismiss='modal' onclick='formSubmit()' type='button') Submit
+						button.btn.btn-default(data-dismiss='modal' type='button') Close
