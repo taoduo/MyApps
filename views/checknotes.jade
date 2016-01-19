@@ -36,7 +36,6 @@ html
 					var formUrl='http://localhost:3000/checknotes';
 					var dataToSend=thisForm.serialize();
 					var callBack=function(responseText) {
-						console.log(3);
 						var date = new Date(Date.parse(responseText.date));
 						var datestr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 						var keywords = responseText.keywords;
@@ -99,7 +98,6 @@ html
 						alert('Are you sure to delete ' + title + '?');
 					},
 					success: function(data) {
-						console.log('haha');
 						if(data === 'deleted') {
 							$('#' + id).remove();
 						} else if(data === 'err') {

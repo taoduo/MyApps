@@ -66,13 +66,13 @@ router.delete('/', function(req, res, next) {
 	db.on('error', console.error.bind(console, 'connection error:'));
 	db.once('open', function() {
 		Note.remove({'_id': req.body.id}, function(err) {
-			if(err) {	
+			if(err) {
 				console.log(err);
 				res.send('err');
 				return;
 			}
 			mongoose.connection.close();
-			res.send('Deleted');
+			res.send('deleted');
 		});
 	});
 });
