@@ -8,51 +8,8 @@ html
 		script(src='/tinymce/tinymce.min.js' type='text/javascript')
 		script(src='/jquery-form/jquery.form.js')
 		script(type='text/javascript').
-			//configure the initial values of the edit form for different notes
-			$(document).on('click', '.editbtn', function(e) {
-				var tag = $(this).data('tag');
-				var title = $(this).data('title');
-				var details = $(this).data('details');
-				var keywords = $(this).data('keywords');
-				var id = $(this).data('id');
-				var date = new Date(Date.parse($(this).data('date')));
-				if($('#editform').length) {
-					$('#editform').show();
-				} else {
-					alert('it does not exist');
-				}
-				$('#editform #tag').val(tag);
-				$('#editform #title').val(title);
-				tinyMCE.activeEditor.setContent(details);
-				$('#editform #keywords').val(keywords);
-				$('#id').val('(#' + id + ')');
-			});
-			//get ready for submit
+			var noteMap = {};
 			$(document).ready(function(){
-				$('#editform').submit(function(event) {
-					//submit the form
-					event.preventDefault();
-					var thisForm=$(this);
-					var formUrl='http://localhost:3000/checknotes';
-					var dataToSend=thisForm.serialize();
-					var callBack=function(responseText) {
-						var date = new Date(Date.parse(responseText.date));
-						var datestr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-						var keywords = responseText.keywords;
-						$('#' + responseText._id + 'tag').html(responseText.tag);
-						$('#' + responseText._id + 'title').html(responseText.title + ' ');
-						$('#' + responseText._id + 'keywords').empty();
-						for(var i in keywords){
-							$('#' + responseText._id + 'keywords').append('<span class=\'label label-success\'>' + keywords[i] + '</span>&nbsp;');
-						}
-						$('#' + responseText._id + 'date').html(datestr);
-						$('#noteslist').prepend($('#' + responseText._id));
-					};
-					var rtnType="html";
-					$.post(formUrl,dataToSend,callBack);
-					return false;
-				});
-				//initialize the tinymce textarea in the modal
 				tinymce.init({
 					setup: function(editor) {
 						editor.on('focus', function() {
@@ -66,7 +23,7 @@ html
 						});
 					},
 					theme: 'modern',
-					selector: '#details',
+					selector: '#editdetails',
 					height: 250,
 					paste_data_images: true,
 					plugins: [
@@ -76,7 +33,7 @@ html
 					'emoticons template paste textcolor colorpicker textpattern imagetools'
 					],
 					menu: [],
-					toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor',
+					toolbar1: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor emoticons',
 					image_advtab: true,
 					templates: [
 					{ title: 'Test template 1', content: 'Test 1' },
@@ -86,28 +43,129 @@ html
 					'/stylesheets/tinymce.css',
 					]
 				});
+				//to do after submit the editing form
+				$('#editform').submit(function(event) {
+					event.preventDefault();
+					var thisForm=$(this);
+					var formUrl='http://localhost:3000/checknotes';
+					var dataToSend=thisForm.serialize();
+					//to do after the editing is successful
+					var callBack=function(responseText) {
+						var date = new Date(Date.parse(responseText.date));
+						var datestr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+						var keywords = responseText.keywords;
+						$('#' + responseText._id + 'tag').html(responseText.tag);
+						var classToAdd;
+						switch (responseText.tag) {
+							case 'EXP':classToAdd = 'label-primary'; break;
+							case 'IDEA': classToAdd = 'label-info'; break;
+							default: classToAdd = 'label-default';
+						}
+						if($('#' + responseText._id + 'tag').hasClass('label-info')) {
+							$('#' + responseText._id + 'tag').removeClass('label-info');
+						} else if($('#' + responseText._id + 'tag').hasClass('label-primary')) {
+							$('#' + responseText._id + 'tag').hasClass('label-primary');
+						} else if($('#' + responseText._id + 'tag').hasClass('label-default')) {
+							$('#' + responseText._id + 'tag').hasClass('label-default');
+						}
+						$('#' + responseText._id + 'tag').addClass(classToAdd);
+						$('#' + responseText._id + 'title').html(responseText.title + ' ');
+						$('#' + responseText._id + 'keywords').empty();
+						for(var i in keywords){
+							$('#' + responseText._id + 'keywords').append('<span class=\'label label-success\'>' + keywords[i] + '</span>&nbsp;');
+						}
+						$('#' + responseText._id + 'date').html(datestr);
+						$('#noteslist').prepend($('#' + responseText._id));
+						noteMap[responseText._id] = responseText;
+					};
+					$.post(formUrl,dataToSend,callBack);
+				});
+				//get the data from server
+				$.post( 'http://localhost:3000/getdata', function( data ) {
+					var tempData = JSON.parse(data);
+					for(i in tempData) {
+						noteMap[tempData[i]._id] = tempData[i];
+					}
+				});
+				//initialize the tag colors
+				initTags();
 			});
-
-			//delete a note
-			function del(id, title) {
+			//the click events
+			$(document).on('click', '.delbtn', function(e) {
+				var regex = /(.*)delbtn/;
+				var id = $(this).attr('id').match(regex)[1];
 				$.ajax({
 					url: 'http://localhost:3000/checknotes',
 					method: 'delete',
 					data: {'id':id},
 					beforeSend: function(){
-						alert('Are you sure to delete ' + title + '?');
+						var confirmDelete = confirm('Are you sure to delete ' + noteMap[id].title + '?');
+						return confirmDelete;
 					},
 					success: function(data) {
 						if(data === 'deleted') {
 							$('#' + id).remove();
+							delete noteMap[id];
 						} else if(data === 'err') {
 							alert('Deletion fail with error.');
 						}
 					}
 				});
+				return false;
+			});
+
+			$(document).on('click', '.editbtn', function(e) {
+				//get the id
+				var regex = /(.*)editbtn/;
+				var id = $(this).attr('id').match(regex)[1];
+				//get the initial values
+				var tag = noteMap[id].tag;
+				var title = noteMap[id].title;
+				var details = noteMap[id].details;
+				var keywords = noteMap[id].keywords;
+				var keywordsstr = "";
+				var date = noteMap[id].date;
+				for(i in keywords) {
+					if(i != keywords.length - 1) {
+						keywordsstr += keywords[i] + ",";
+					}
+				}
+				//show the form and fill in the values
+				$('#editform').show();
+				$('#editform #edittag').val(tag);
+				$('#editform #edittitle').val(title);
+				tinyMCE.activeEditor.setContent(details);
+				$('#editform #editkeywords').val(keywordsstr);
+				$('#editform #editid').val('(#' + id + ')');
+				return false;
+			});
+
+			$(document).on('click', '.detailbtn', function(e) {
+				var regex = /(.*)detailbtn/;
+				var id = $(this).attr('id').match(regex)[1];
+				var title = noteMap[id].title;
+				var details = noteMap[id].details;
+				$('#detailmodal #detailtitle').html(title);
+				$('#detailmodal #detailbody').html(details);
+			});
+
+			function initTags() {
+				for(id in noteMap) {
+					switch(noteMap[id].tags) {
+						case 'IDEA':    
+							$('#' + id + 'tag').removeClass('label-primary');
+							$('#' + id + 'tag').addClass('label-info');
+							break;
+						default:
+              console.log("default: " + id + " ")
+							$('#' + id + 'tag').removeClass('label-primary');
+							$('#' + id + 'tag').addClass('label-default');
+							break;
+					}
+				}
 			}
-			//submit the edit form
-			function formSubmit() {
+
+			function editFormSubmit() {
 				tinyMCE.triggerSave();
 				$('#editform').submit();
 			}
@@ -116,7 +174,7 @@ html
 			each val, index in notes
 				li(id=val.id)
 					span.label.label-primary(id=val.id + 'tag')= val.tag
-					a.list-group-item
+					a.detailbtn.list-group-item(id=val.id + 'detailbtn' data-toggle='modal' data-target="#detailmodal")
 						b(id=val.id + 'title')=val.title + ' '
 						div(id=val.id + 'keywords' style='display:inline;')
 							each k in val.keywords
@@ -125,39 +183,49 @@ html
 						.pull-right
 							span(id=val.id + 'date')=(val.date.getFullYear() + '-' + (val.date.getMonth() + 1) + '-' + val.date.getDate())
 							|&nbsp;
-							button.editbtn.btn.btn-default.btn-xs(data-toggle='modal' data-target='#editmodal' data-title=val.title data-tag=val.tag data-details=val.details data-keywords=val.keywords data-id=val.id data-date=val.date)
+							button.editbtn.btn.btn-default.btn-xs(id=val.id + 'editbtn' data-toggle='modal' href='#editmodal')
 								span.glyphicon.glyphicon-edit
 							|&nbsp;
-							button.btn.btn-default.btn-xs(onclick='del(\'' + val.id + '\',\'' + val.title + '\')')
+							button.delbtn.btn.btn-default.btn-xs(id=val.id + 'delbtn')
 								span.glyphicon.glyphicon-trash
 		#editmodal.modal.fade(role='dialog')
 			.modal-dialog
 				.modal-content
 					.modal-header
-						button.close(type='button' data-dismiss='modal')&times;
+						button.close(type='button' data-dismiss='modal') &times;
 						h4#modaltitle.modal-title(style='display:inline;') Edit A Note
 					.modal-body
 						form#editform.form-horizontal(role='form')
 							.form-group
 								label.control-label.col-sm-2(for='tag') Tag:
 								.col-sm-10
-									input#tag.form-control(type='text' name='tag')
+									input#edittag.form-control(type='text' name='tag')
 							.form-group
 								label.control-label.col-sm-2(for='title') Title:
 								.col-sm-10
-									input#title.form-control.col-sm-10(type='text' name='title')
+									input#edittitle.form-control.col-sm-10(type='text' name='title')
 							.form-group
 								label.control-label.col-sm-2(for='keywords') Keywords:
 								.col-sm-10
-									input#keywords.form-control.col-sm-10(type='text' name='keywords')
+									input#editkeywords.form-control.col-sm-10(type='text' name='keywords')
 							.form-group
 								label.control-label.col-sm-2(for='id') ID:
 								.col-sm-10
-									input#id.form-control(name='id' readonly)
+									input#editid.form-control(name='id' readonly)
 							.form-group
 								label.control-label.col-sm-2(for='details') Details:
 								.col-sm-10
-									textarea#details.form-control(name='details')
+									textarea#editdetails.form-control(name='details')
 					.modal-footer
-						button#submitButton.btn.btn-success(data-dismiss='modal' onclick='formSubmit()' type='button') Submit
+						button#submitButton.btn.btn-success(data-dismiss='modal' onclick="editFormSubmit();" type='button') Submit
+						button.btn.btn-default(data-dismiss='modal' type='button') Close
+		#detailmodal.modal.fade(role='dialog')
+			.modal-dialog
+				.modal-content
+					.modal-header
+						button.close(type='button' data-dismiss='modal') &times;
+						h4#detailtitle.modal-title(style='display:inline;')
+					.modal-body
+						div#detailbody
+					.modal-footer
 						button.btn.btn-default(data-dismiss='modal' type='button') Close

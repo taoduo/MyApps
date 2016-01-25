@@ -6,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var newnotes = require('./routes/newnotes');
 var checknotes = require('./routes/checknotes');
+var mongoose = require('mongoose');
+var Note = require(__dirname + '/public/javascripts/note_model.js');
+
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -23,7 +26,24 @@ app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/checknotes', checknotes);
 app.use('/newnotes', newnotes);
-app.use('/', function(req, res, next) {
+app.post('/getdata', function(req, res, next) {
+  mongoose.connect('mongodb://localhost/test');
+	var db = mongoose.connection;
+	db.on('error', console.error.bind(console, 'connection error:'));
+	db.once('open', function(callback) {
+		Note.find({}, function(err, notes) {
+			if(err) {
+				console.log('error in query:' + err);
+				return;
+			}
+			mongoose.connection.close();
+			notes = notes.reverse();
+			res.end(JSON.stringify(notes));
+		}).sort('date');
+	});
+});
+
+app.get('/', function(req, res, next) {
   res.render('navpage');
 });
 
