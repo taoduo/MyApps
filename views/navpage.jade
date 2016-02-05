@@ -7,34 +7,58 @@ html
 		link(rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css")
 		script(src="/bootstrap/dist/js/bootstrap.min.js" type='text/javascript')
 		script(src="http://code.jquery.com/ui/1.11.4/jquery-ui.js" type='text/javascript')
-body
-	.row
-		#checkmynotes.col-md-4
-			center
-				h1 NOTES?
-		#checkmyschedule.col-md-4
-			center
-				h1 SCHEDULE?
-		#contactme.col-md-3
-			center
-				h1 CONTACT?
-	script(type='text/javascript').
-		function init() {
-			$('#checkmynotes').hide();
-			$('#checkmyschedule').hide();
-			$('#contactme').hide();
-		}
-		init();
-		$(window).load(function(){
-			$("#checkmynotes").show("bounce", {
-				times: 5, 
-				complete: function() {
-					$("#checkmyschedule").show("bounce", {times: 5,
-						complete:function() {
-							$('#contactme').show('bounce', {times: 5}, 1000);
-						}
-					}, 1000);
+		script(type='text/javascript').
+			var lockFlag = false;
+			var browseFlag = false;
+			$(document).ready(function() {
+				init();
+			});
+			function init() {
+				//window.addEventListener("keypress", keyboardBrowse, false); 
+				//keyboardBrowse.str = "";
+				var midbox = document.getElementById("midbox");
+				var midboxContent = midbox.getContext("2d");
+				midboxContent.fillStyle = "#FF0000";
+				midboxContent.fillRect(0,0,150,75);
+			}
+			/*function keyboardBrowse(e) {
+				e.preventDefault();
+				if(String.fromCharCode(e.charCode) === "*"){
+					lockFlag = true;
 				}
-			}, 1000);
-		});
+				keyboardBrowse.str += String.fromCharCode(e.charCode);
+				if(keyboardBrowse.str.length == 4 && lockFlag == false && browseFlag == true) {
+					$.post('http://localhost:3000/magickeys', {spell: keyboardBrowse.str}, function(data) {
+						switch(data) {
+							case 'nt':
+								location.href = "http://localhost:3000/checknotes";
+								break;
+							case 'nv':
+								location.href = "http://localhost:3000/";
+								break;
+							case 'nn':
+								location.href = "http://localhost:3000/newnotes";
+								break;
+							default:
+								location.href = "http://localhost:3000/";
+						}
+					});
+					keyboardBrowse.str = "";
+				} else if (keyboardBrowse.str.length == 4 && lockFlag == true && browseFlag == false) {
+					$.post('http://localhost:3000/magickeys', {spell: keyboardBrowse.str}, function(data) {
+						lockFlag = false;
+						switch(data) {
+							case 'lock':
+								browseFlag = false;
+								break;
+							case 'unlock':
+								browseFlag = true;
+								break;
+						}
+					});
+					keyboardBrowse.str = "";
+				}
+			}*/
 
+	body
+		canvas#midbox(width="200" height="100")

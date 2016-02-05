@@ -64,9 +64,9 @@ html
 						if($('#' + responseText._id + 'tag').hasClass('label-info')) {
 							$('#' + responseText._id + 'tag').removeClass('label-info');
 						} else if($('#' + responseText._id + 'tag').hasClass('label-primary')) {
-							$('#' + responseText._id + 'tag').hasClass('label-primary');
+							$('#' + responseText._id + 'tag').removeClass('label-primary');
 						} else if($('#' + responseText._id + 'tag').hasClass('label-default')) {
-							$('#' + responseText._id + 'tag').hasClass('label-default');
+							$('#' + responseText._id + 'tag').removeClass('label-default');
 						}
 						$('#' + responseText._id + 'tag').addClass(classToAdd);
 						$('#' + responseText._id + 'title').html(responseText.title + ' ');
@@ -85,10 +85,12 @@ html
 					var tempData = JSON.parse(data);
 					for(i in tempData) {
 						noteMap[tempData[i]._id] = tempData[i];
+						//initialize the tag colors
+						initTags();
 					}
 				});
-				//initialize the tag colors
-				initTags();
+				window.addEventListener("keypress", doKeyDown, false); 
+				doKeyDown.str = "";
 			});
 			//the click events
 			$(document).on('click', '.delbtn', function(e) {
@@ -151,17 +153,42 @@ html
 
 			function initTags() {
 				for(id in noteMap) {
-					switch(noteMap[id].tags) {
-						case 'IDEA':    
+					switch(noteMap[id].tag) {
+						case 'EXP':
+						break;
+						case 'IDEA':
 							$('#' + id + 'tag').removeClass('label-primary');
 							$('#' + id + 'tag').addClass('label-info');
 							break;
 						default:
-              console.log("default: " + id + " ")
 							$('#' + id + 'tag').removeClass('label-primary');
 							$('#' + id + 'tag').addClass('label-default');
 							break;
 					}
+				}
+			}
+
+			function doKeyDown(e) {
+				e.preventDefault();
+				doKeyDown.str += String.fromCharCode(e.charCode);
+				if(doKeyDown.str.length == 4) {
+					$.post('http://localhost:3000/magickeys', {spell: doKeyDown.str}, function(data) {
+						console.log(data);
+						switch(data) {
+							case 'nt':
+								location.href = "http://localhost:3000/checknotes";
+								break;
+							case 'nv':
+								location.href = "http://localhost:3000/";
+								break;
+							case 'nn':
+								location.href = "http://localhost:3000/newnotes";
+								break;
+							default:
+								location.href = "http://localhost:3000/";
+						}
+					});
+					doKeyDown.str = "";
 				}
 			}
 

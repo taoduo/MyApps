@@ -42,6 +42,28 @@ app.post('/getdata', function(req, res, next) {
 		}).sort('date');
 	});
 });
+app.post('/magickeys', function(req, res, next) {
+  if(req.body.spell.length == 4){
+    switch(req.body.spell) {
+      case 'note':
+        res.send("nt");
+        break;
+      case 'navp':
+        res.send("nv");
+        break;
+      case 'newn':
+        res.send("nn");
+      default:
+        res.send("");
+    }
+  } else if(req.body.spell.length == 6){
+    if(req.body.spell === 'lockbr'){
+        res.send("lock");
+    } else if(req.body.spell === 'unlock') {
+        res.send("unlock");
+    }
+  }
+});
 
 app.get('/', function(req, res, next) {
   res.render('navpage');
