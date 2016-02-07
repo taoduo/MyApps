@@ -2,7 +2,7 @@ var dragTrackTop = 0;
 var dragTrackLeft = 0;
 $(document).ready(function() {
   init();
-  bonds();
+  bind();
 });
 function init() {
   var apps = $(".app");
@@ -48,7 +48,7 @@ function init() {
     });
   });
 }
-function bonds() {
+function bind() {
   $('.app').draggable();
   $('#resumeDownload').draggable();
   $('i').mouseover(function() {

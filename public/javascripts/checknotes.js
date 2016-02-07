@@ -1,5 +1,9 @@
 var noteMap = {};
 $(document).ready(function(){
+  init();
+  bind();
+});
+function init() {
   tinymce.init({
     setup: function(editor) {
       editor.on('focus', function() {
@@ -33,7 +37,17 @@ $(document).ready(function(){
     '/stylesheets/tinymce.css',
     ]
   });
-  //to do after submit the editing form
+
+  $.post( 'http://localhost:3000/getdata', function( data ) {
+    var tempData = JSON.parse(data);
+    for(i in tempData) {
+      noteMap[tempData[i]._id] = tempData[i];
+      //initialize the tag colors
+      initTags();
+    }
+  });
+}
+function bind() {
   $('#editform').submit(function(event) {
     event.preventDefault();
     var thisForm=$(this);
@@ -70,75 +84,94 @@ $(document).ready(function(){
     };
     $.post(formUrl,dataToSend,callBack);
   });
-  //get the data from server
-  $.post( 'http://localhost:3000/getdata', function( data ) {
-    var tempData = JSON.parse(data);
-    for(i in tempData) {
-      noteMap[tempData[i]._id] = tempData[i];
-      //initialize the tag colors
-      initTags();
-    }
+
+  $(document).on('click', '.delbtn', function(e) {
+    var regex = /(.*)delbtn/;
+    var id = $(this).attr('id').match(regex)[1];
+    $.ajax({
+      url: 'http://localhost:3000/checknotes',
+      method: 'delete',
+      data: {'id':id},
+      beforeSend: function(){
+        var confirmDelete = confirm('Are you sure to delete ' + noteMap[id].title + '?');
+        return confirmDelete;
+      },
+      success: function(data) {
+        if(data === 'deleted') {
+          $('#' + id).remove();
+          delete noteMap[id];
+        } else if(data === 'err') {
+          alert('Deletion fail with error.');
+        }
+      }
+    });
+    return false;
   });
-});
-//the click events
-$(document).on('click', '.delbtn', function(e) {
-  var regex = /(.*)delbtn/;
-  var id = $(this).attr('id').match(regex)[1];
-  $.ajax({
-    url: 'http://localhost:3000/checknotes',
-    method: 'delete',
-    data: {'id':id},
-    beforeSend: function(){
-      var confirmDelete = confirm('Are you sure to delete ' + noteMap[id].title + '?');
-      return confirmDelete;
-    },
-    success: function(data) {
-      if(data === 'deleted') {
-        $('#' + id).remove();
-        delete noteMap[id];
-      } else if(data === 'err') {
-        alert('Deletion fail with error.');
+
+  $(document).on('click', '.editbtn', function(e) {
+    //get the id
+    var regex = /(.*)editbtn/;
+    var id = $(this).attr('id').match(regex)[1];
+    //get the initial values
+    var tag = noteMap[id].tag;
+    var title = noteMap[id].title;
+    var details = noteMap[id].details;
+    var keywords = noteMap[id].keywords;
+    var keywordsstr = "";
+    var date = noteMap[id].date;
+    for(i in keywords) {
+      if(i != keywords.length - 1) {
+        keywordsstr += keywords[i] + ",";
       }
     }
+    //show the form and fill in the values
+    $('#editform').show();
+    $('#editform #edittag').val(tag);
+    $('#editform #edittitle').val(title);
+    tinyMCE.activeEditor.setContent(details);
+    $('#editform #editkeywords').val(keywordsstr);
+    $('#editform #editid').val('(#' + id + ')');
+    return false;
   });
-  return false;
-});
 
-$(document).on('click', '.editbtn', function(e) {
-  //get the id
-  var regex = /(.*)editbtn/;
-  var id = $(this).attr('id').match(regex)[1];
-  //get the initial values
-  var tag = noteMap[id].tag;
-  var title = noteMap[id].title;
-  var details = noteMap[id].details;
-  var keywords = noteMap[id].keywords;
-  var keywordsstr = "";
-  var date = noteMap[id].date;
-  for(i in keywords) {
-    if(i != keywords.length - 1) {
-      keywordsstr += keywords[i] + ",";
+  $(document).on('click', '.detailbtn', function(e) {
+    var regex = /(.*)detailbtn/;
+    var id = $(this).attr('id').match(regex)[1];
+    var title = noteMap[id].title;
+    var details = noteMap[id].details;
+    $('#detailmodal #detailtitle').html(title);
+    $('#detailmodal #detailbody').html(details);
+  });
+
+  $('#searchInput').on('input',function(e) {
+    var search = e.target.value;
+    if(search != '') {
+      var relevanceId = [];
+      for(var id in noteMap) {
+        noteMap[id].relevance = getRelevance(search, noteMap[id]);
+        relevanceId.push({
+          "id":id,
+          "relevance":getRelevance(search, noteMap[id])
+        });
+      }
+      relevanceId.sort(compareRelevance);
+      for(var index in relevanceId) {
+        $('#' + relevanceId[index].id).parent().append($('#' + relevanceId[index].id));
+      }
+    } else {
+      console.log('123');
     }
-  }
-  //show the form and fill in the values
-  $('#editform').show();
-  $('#editform #edittag').val(tag);
-  $('#editform #edittitle').val(title);
-  tinyMCE.activeEditor.setContent(details);
-  $('#editform #editkeywords').val(keywordsstr);
-  $('#editform #editid').val('(#' + id + ')');
-  return false;
-});
-
-$(document).on('click', '.detailbtn', function(e) {
-  var regex = /(.*)detailbtn/;
-  var id = $(this).attr('id').match(regex)[1];
-  var title = noteMap[id].title;
-  var details = noteMap[id].details;
-  $('#detailmodal #detailtitle').html(title);
-  $('#detailmodal #detailbody').html(details);
-});
-
+  });
+}
+function compareRelevance(a,b) {
+  if (a.relevance > b.relevance)
+    return -1;
+  else if (a.relevance < b.relevance)
+    return 1;
+  else
+    return 0;
+}
+//the click events
 function initTags() {
   for(id in noteMap) {
     switch(noteMap[id].tag) {
@@ -159,4 +192,28 @@ function initTags() {
 function editFormSubmit() {
   tinyMCE.triggerSave();
   $('#editform').submit();
+}
+function stringMatch(smallStr, bigStr) {
+  var match = 0;
+  var small = smallStr.toLowerCase();
+  var big = bigStr.toLowerCase();
+  var startIndex = 0, smallStrLen = smallStr.length;
+  var index;
+  while ((index = bigStr.indexOf(smallStr, startIndex)) > -1) {
+    match++;
+    startIndex = index + smallStrLen;
+  }
+  return match;
+}
+function getRelevance(search, note) {
+  var relevance;
+  var r1 = stringMatch(search, note.tag);
+  var r2 = stringMatch(search, note.title);
+  var r3 = 0;
+  for(var k in note.keywords){
+    r3 += stringMatch(search, note.keywords[k]);
+  }
+  var r4 = stringMatch(search, note.details);
+  relevance = r1 * 3 + r2 * 5 + r3 * 4 + r4;
+  return relevance;
 }
