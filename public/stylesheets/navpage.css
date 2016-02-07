@@ -1,0 +1,58 @@
+.footer {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  z-index: -10;
+  font-size: 10px;
+}
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }
+.app {
+  position: absolute;
+  width: 200px;
+}
+
+.page-header h1 {
+  color: grey;
+}
+#cleanUp {
+  position: absolute;
+}
+.openPopup {
+  position: absolute;
+  font-size: 30pt;
+  background-color: black;
+  color: white;
+  z-index: 10;
+  margin-left: auto;
+  margin-right: auto;
+  width:100%;
+  top:50%;
+  text-align: center;
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}

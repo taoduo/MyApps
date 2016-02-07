@@ -33,8 +33,8 @@ router.post('/', function(req, res, next) {
 				mongoose.connection.close();
 				console.log('Saved : ', data);
 				mongoose.disconnect();
-				res.send('The document is successfully inserted.');
 			}
+      res.end();
 		});
 	});
 });

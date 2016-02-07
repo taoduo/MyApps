@@ -1,14 +1,32 @@
 extends newnoteform
-
 block content
-	form(role='form' method="post" name='note' action="/newnotes")
-		.form-group
-			h3#tag(name='tag') EXP
-		.form-group
-			h1#title(name='title') Default_Title
-		.form-group
-			h3#keywords(name='keywords') Default_Keywords,
-		.form-group
-			textarea#mytextarea(name='details') Default_Details
-		.form-group
-			button.btn.btn-success(type='submit' accesskey='X') Submit
+	nav.navbar.navbar-default
+		.container-fluid
+			.navbar-header
+				button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+					span.sr-only Personal Website
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a.navbar-brand(href='http://localhost:3000/') Personal Website
+			#navbar.navbar-collapse.collapse
+				ul.nav.navbar-nav
+					li.active
+						a(href='http://localhost:3000/newnotes') New Notes
+					li
+						a(href='http://localhost:3000/checknotes') Check Notes
+	.container-fluid
+		.page-header
+			h1(style="color:blue;display:inline") New Note
+			a(type="button" class="btn btn-primary" href="http://localhost:3000/checknotes" style="position:absolute; right:20px; margin-bottom:20px") Check All Notes
+		form#noteSubmitForm(role='form' name='note')
+			.form-group
+				h3#tag(name='tag') EXP
+			.form-group
+				h1#title(name='title') Default_Title
+			.form-group
+				h3#keywords(name='keywords') Default_Keywords,
+			.form-group
+				textarea#mytextarea(name='details') Default_Details
+			.form-group
+				button#submitButton.btn.btn-success(type='button' accesskey='X') Submit

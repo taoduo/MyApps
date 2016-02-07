@@ -89,8 +89,6 @@ html
 						initTags();
 					}
 				});
-				window.addEventListener("keypress", doKeyDown, false); 
-				doKeyDown.str = "";
 			});
 			//the click events
 			$(document).on('click', '.delbtn', function(e) {
@@ -168,91 +166,88 @@ html
 				}
 			}
 
-			function doKeyDown(e) {
-				e.preventDefault();
-				doKeyDown.str += String.fromCharCode(e.charCode);
-				if(doKeyDown.str.length == 4) {
-					$.post('http://localhost:3000/magickeys', {spell: doKeyDown.str}, function(data) {
-						console.log(data);
-						switch(data) {
-							case 'nt':
-								location.href = "http://localhost:3000/checknotes";
-								break;
-							case 'nv':
-								location.href = "http://localhost:3000/";
-								break;
-							case 'nn':
-								location.href = "http://localhost:3000/newnotes";
-								break;
-							default:
-								location.href = "http://localhost:3000/";
-						}
-					});
-					doKeyDown.str = "";
-				}
-			}
-
 			function editFormSubmit() {
 				tinyMCE.triggerSave();
 				$('#editform').submit();
 			}
 	body
-		ul#noteslist.list-group
-			each val, index in notes
-				li(id=val.id)
-					span.label.label-primary(id=val.id + 'tag')= val.tag
-					a.detailbtn.list-group-item(id=val.id + 'detailbtn' data-toggle='modal' data-target="#detailmodal")
-						b(id=val.id + 'title')=val.title + ' '
-						div(id=val.id + 'keywords' style='display:inline;')
-							each k in val.keywords
-								span.label.label-success= k
+		.container-fluid
+			nav.navbar.navbar-default
+				.container-fluid
+					.navbar-header
+						button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+							span.sr-only Personal Website
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.navbar-brand(href='http://localhost:3000/') Personal Website
+					#navbar.navbar-collapse.collapse
+						ul.nav.navbar-nav
+							li
+								a(href='http://localhost:3000/newnotes') New Notes
+							li.active
+								a(href='http://localhost:3000/checknotes') Check Notes
+
+			.page-header
+				h1(style="color:blue;display:inline") Check Notes
+				a(type="button" class="btn btn-primary" href="http://localhost:3000/newnotes" style="position:absolute; right:20px; margin-bottom:20px") Add New Notes
+
+			ul#noteslist.list-group(style="list-style-type: none;")
+				each val, index in notes
+					li(id=val.id style="margin-bottom:10px")
+						span.label.label-primary(id=val.id + 'tag')= val.tag
+						a.detailbtn.list-group-item(id=val.id + 'detailbtn' data-toggle='modal' data-target="#detailmodal")
+							b(id=val.id + 'title')=val.title + ' '
+							div(id=val.id + 'keywords' style='display:inline;')
+								each k in val.keywords
+									span.label.label-success= k
+									|&nbsp;
+							.pull-right
+								span(id=val.id + 'date')=(val.date.getFullYear() + '-' + (val.date.getMonth() + 1) + '-' + val.date.getDate())
 								|&nbsp;
-						.pull-right
-							span(id=val.id + 'date')=(val.date.getFullYear() + '-' + (val.date.getMonth() + 1) + '-' + val.date.getDate())
-							|&nbsp;
-							button.editbtn.btn.btn-default.btn-xs(id=val.id + 'editbtn' data-toggle='modal' href='#editmodal')
-								span.glyphicon.glyphicon-edit
-							|&nbsp;
-							button.delbtn.btn.btn-default.btn-xs(id=val.id + 'delbtn')
-								span.glyphicon.glyphicon-trash
-		#editmodal.modal.fade(role='dialog')
-			.modal-dialog
-				.modal-content
-					.modal-header
-						button.close(type='button' data-dismiss='modal') &times;
-						h4#modaltitle.modal-title(style='display:inline;') Edit A Note
-					.modal-body
-						form#editform.form-horizontal(role='form')
-							.form-group
-								label.control-label.col-sm-2(for='tag') Tag:
-								.col-sm-10
-									input#edittag.form-control(type='text' name='tag')
-							.form-group
-								label.control-label.col-sm-2(for='title') Title:
-								.col-sm-10
-									input#edittitle.form-control.col-sm-10(type='text' name='title')
-							.form-group
-								label.control-label.col-sm-2(for='keywords') Keywords:
-								.col-sm-10
-									input#editkeywords.form-control.col-sm-10(type='text' name='keywords')
-							.form-group
-								label.control-label.col-sm-2(for='id') ID:
-								.col-sm-10
-									input#editid.form-control(name='id' readonly)
-							.form-group
-								label.control-label.col-sm-2(for='details') Details:
-								.col-sm-10
-									textarea#editdetails.form-control(name='details')
-					.modal-footer
-						button#submitButton.btn.btn-success(data-dismiss='modal' onclick="editFormSubmit();" type='button') Submit
-						button.btn.btn-default(data-dismiss='modal' type='button') Close
-		#detailmodal.modal.fade(role='dialog')
-			.modal-dialog
-				.modal-content
-					.modal-header
-						button.close(type='button' data-dismiss='modal') &times;
-						h4#detailtitle.modal-title(style='display:inline;')
-					.modal-body
-						div#detailbody
-					.modal-footer
-						button.btn.btn-default(data-dismiss='modal' type='button') Close
+								button.editbtn.btn.btn-default.btn-xs(id=val.id + 'editbtn' data-toggle='modal' href='#editmodal')
+									span.glyphicon.glyphicon-edit
+								|&nbsp;
+								button.delbtn.btn.btn-default.btn-xs(id=val.id + 'delbtn')
+									span.glyphicon.glyphicon-trash
+			#editmodal.modal.fade(role='dialog')
+				.modal-dialog
+					.modal-content
+						.modal-header
+							button.close(type='button' data-dismiss='modal') &times;
+							h4#modaltitle.modal-title(style='display:inline;') Edit A Note
+						.modal-body
+							form#editform.form-horizontal(role='form')
+								.form-group
+									label.control-label.col-sm-2(for='tag') Tag:
+									.col-sm-10
+										input#edittag.form-control(type='text' name='tag')
+								.form-group
+									label.control-label.col-sm-2(for='title') Title:
+									.col-sm-10
+										input#edittitle.form-control.col-sm-10(type='text' name='title')
+								.form-group
+									label.control-label.col-sm-2(for='keywords') Keywords:
+									.col-sm-10
+										input#editkeywords.form-control.col-sm-10(type='text' name='keywords')
+								.form-group
+									label.control-label.col-sm-2(for='id') ID:
+									.col-sm-10
+										input#editid.form-control(name='id' readonly)
+								.form-group
+									label.control-label.col-sm-2(for='details') Details:
+									.col-sm-10
+										textarea#editdetails.form-control(name='details')
+						.modal-footer
+							button#submitButton.btn.btn-success(data-dismiss='modal' onclick="editFormSubmit();" type='button') Submit
+							button.btn.btn-default(data-dismiss='modal' type='button') Close
+			#detailmodal.modal.fade(role='dialog')
+				.modal-dialog
+					.modal-content
+						.modal-header
+							button.close(type='button' data-dismiss='modal') &times;
+							h4#detailtitle.modal-title(style='display:inline;')
+						.modal-body
+							div#detailbody
+						.modal-footer
+							button.btn.btn-default(data-dismiss='modal' type='button') Close

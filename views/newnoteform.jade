@@ -2,7 +2,7 @@ doctype html
 html
 	head
 		title Take a Note
-		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='/stylesheets/note.css')
 		script(src='/jquery/dist/jquery.min.js' type='text/javascript')
 		link(rel='stylesheet', href="/bootstrap/dist/css/bootstrap.min.css")
 		script(src="/bootstrap/dist/js/bootstrap.min.js" type='text/javascript')
@@ -98,5 +98,24 @@ html
 				menubar: false,
 				toolbar: false,
 			});
+
+			$(document).ready(function() {
+				$('#noteSubmitForm').submit(function(event) {
+					event.preventDefault();
+					var thisForm=$(this);
+					var formUrl='http://localhost:3000/newnotes';
+					var dataToSend=thisForm.serialize();
+					//to do after the editing is successful
+					var callBack=function(responseText) {
+						location.href = "http://localhost:3000/checknotes";
+					};
+					$.post(formUrl,dataToSend,callBack);
+				});
+				$('#submitButton').click(function() {
+					tinyMCE.triggerSave();
+					$('#noteSubmitForm').submit();
+				});
+			});
+
 	body
 	block content
