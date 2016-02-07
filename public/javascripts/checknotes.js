@@ -46,6 +46,10 @@ function init() {
       initTags();
     }
   });
+  $( "#noteslist" ).sortable({
+    placeholder: "ui-state-highlight"
+  });
+  $( "#noteslist" ).disableSelection();
 }
 function bind() {
   $('#editform').submit(function(event) {
