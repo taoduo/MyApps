@@ -154,19 +154,38 @@ function bind() {
           "relevance":getRelevance(search, noteMap[id])
         });
       }
-      relevanceId.sort(compareRelevance);
+      relevanceId.sort(compareByRelevance);
       for(var index in relevanceId) {
         $('#' + relevanceId[index].id).parent().append($('#' + relevanceId[index].id));
       }
     } else {
-      console.log('123');
+      var dateId = [];
+      for(var id in noteMap) {
+        dateId.push({
+          "id":id,
+          "date":noteMap[id].date
+        });
+      }
+      dateId.sort(compareByDate);
+      for(var index in dateId) {
+        $('#' + dateId[index].id).parent().append($('#' + dateId[index].id));
+      }
     }
+    return false;
   });
 }
-function compareRelevance(a,b) {
+function compareByRelevance(a,b) {
   if (a.relevance > b.relevance)
     return -1;
   else if (a.relevance < b.relevance)
+    return 1;
+  else
+    return 0;
+}
+function compareByDate(a,b) {
+  if (a.date > b.date)
+    return -1;
+  else if (a.date < b.date)
     return 1;
   else
     return 0;
