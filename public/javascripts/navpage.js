@@ -1,5 +1,7 @@
 var dragTrackTop = 0;
 var dragTrackLeft = 0;
+var enterTrack = "";
+var url = "http://localhost:3000/"
 $(document).ready(function() {
   init();
   bind();
@@ -47,6 +49,7 @@ function init() {
       text:"<i class='glyphicon glyphicon-download' style='font-size:20px'></i>"
     });
   });
+  $("[name='adm-sw']").bootstrapSwitch();
 }
 function bind() {
   $('.app').draggable();
@@ -120,7 +123,27 @@ function bind() {
     $('#resumeDownload span').empty();
     $('#resumeDownload span').append("<i class='glyphicon glyphicon-download' style='font-size:20px'></i>");
   });
+  $("input[name='adm-sw']").on('switchChange.bootstrapSwitch', function(event, state) {
+    if(state) {
+      $(document).keypress(function(event) {
+        enterTrack += String.fromCharCode(event.which);
+        if(enterTrack.length == 6) {
+          $.post(url + 'adm', {pw:enterTrack}, function(response) {
+            if(response == 'adm') {
+
+            }
+          });
+          enterTrack = "";
+        }
+        return false;
+      });
+    } else {
+      enterTrack = "";
+      $(document).off('keypress');
+    }
+  });
 }
+
 function rotationHelper() {
   console.log('called');
   var degree = 360;

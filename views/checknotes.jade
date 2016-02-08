@@ -3,10 +3,12 @@ html
 	head
 		title Check My Notes
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
-		script(src='/jquery/dist/jquery.min.js' type='text/javascript')
 		link(rel='stylesheet', href="/bootstrap/dist/css/bootstrap.min.css")
 		link(rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css")
 		link(rel='stylesheet', href="/stylesheets/checknotes.css")
+		link(rel="stylesheet" href="/stylesheets/bootstrap-switch.min.css")
+		script(src='/jquery/dist/jquery.min.js' type='text/javascript')
+		script(src="/javascripts/bootstrap-switch.min.js" rel="stylesheet")
 		script(src="/bootstrap/dist/js/bootstrap.min.js" type='text/javascript')
 		script(src="http://code.jquery.com/ui/1.11.4/jquery-ui.js" type='text/javascript')
 		script(src='/tinymce/tinymce.min.js' type='text/javascript')
@@ -49,11 +51,18 @@ html
 							.pull-right
 								span(id=val.id + 'date')=(val.date.getFullYear() + '-' + (val.date.getMonth() + 1) + '-' + val.date.getDate())
 								|&nbsp;
-								button.editbtn.btn.btn-default.btn-xs(id=val.id + 'editbtn' data-toggle='modal' href='#editmodal')
-									span.glyphicon.glyphicon-edit
-								|&nbsp;
-								button.delbtn.btn.btn-default.btn-xs(id=val.id + 'delbtn')
-									span.glyphicon.glyphicon-trash
+								if login
+									button.editbtn.btn.btn-default.btn-xs(id=val.id + 'editbtn' data-toggle='modal' href='#editmodal')
+										span.glyphicon.glyphicon-edit
+									|&nbsp;
+									button.delbtn.btn.btn-default.btn-xs(id=val.id + 'delbtn')
+										span.glyphicon.glyphicon-trash
+								else
+									button.editbtn.btn.btn-default.btn-xs(id=val.id + 'editbtn' data-toggle='modal' href='#editmodal' disabled)
+										span.glyphicon.glyphicon-edit
+									|&nbsp;
+									button.delbtn.btn.btn-default.btn-xs(id=val.id + 'delbtn' disabled)
+										span.glyphicon.glyphicon-trash
 			#editmodal.modal.fade(role='dialog')
 				.modal-dialog
 					.modal-content

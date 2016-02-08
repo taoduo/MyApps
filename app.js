@@ -8,10 +8,9 @@ var bodyParser = require('body-parser');
 var newnotes = require('./routes/newnotes');
 var checknotes = require('./routes/checknotes');
 var mongoose = require('mongoose');
+var session = require('express-session');
 var Note = require(__dirname + '/public/javascripts/note_model.js');
-
 var app = express();
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -22,7 +21,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
-
+app.use(session({
+  secret:'TIML',
+  resave: true,
+  saveUninitialized: true
+}));
 
 
 app.use('/checknotes', checknotes);
@@ -43,26 +46,10 @@ app.post('/getdata', function(req, res, next) {
 		}).sort('date');
 	});
 });
-app.post('/magickeys', function(req, res, next) {
-  if(req.body.spell.length == 4){
-    switch(req.body.spell) {
-      case 'note':
-        res.send("nt");
-        break;
-      case 'navp':
-        res.send("nv");
-        break;
-      case 'newn':
-        res.send("nn");
-      default:
-        res.send("");
-    }
-  } else if(req.body.spell.length == 6){
-    if(req.body.spell === 'lockbr'){
-        res.send("lock");
-    } else if(req.body.spell === 'unlock') {
-        res.send("unlock");
-    }
+app.post('/adm', function(req, res, next) {
+  if(req.body.pw === 'duotao'){
+    req.session.login = true;
+    res.send('adm');
   }
 });
 

@@ -3,12 +3,14 @@ html
 	head
 		title Cover Page
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
-		script(src='/jquery/dist/jquery.min.js' type='text/javascript')
 		link(rel='stylesheet' href="/bootstrap/dist/css/bootstrap.min.css")
 		link(rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css")
 		link(rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css")
 		link(rel="stylesheet" href="/stylesheets/navpage.css")
 		link(rel="stylesheet" href="/stylesheets/percircle.min.css")
+		link(rel="stylesheet" href="/stylesheets/bootstrap-switch.min.css")
+		script(src='/jquery/dist/jquery.min.js' type='text/javascript')
+		script(src="/javascripts/bootstrap-switch.min.js" rel="stylesheet")
 		script(src="/javascripts/percircle.min.js" type="text/javascript")
 		script(src="/bootstrap/dist/js/bootstrap.min.js" type='text/javascript')
 		script(src="http://code.jquery.com/ui/1.11.4/jquery-ui.js" type='text/javascript')
@@ -47,3 +49,4 @@ html
 			footer.footer(style="background-color:#ffffff")
 				.container
 					p Made by Duo Tao @ 2015
+					input#adm-sw(data-size="mini" type="checkbox" name="adm-sw")

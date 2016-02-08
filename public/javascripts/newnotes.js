@@ -97,7 +97,11 @@ $(document).ready(function() {
     var dataToSend=thisForm.serialize();
     //to do after the editing is successful
     var callBack=function(responseText) {
-      location.href = "http://localhost:3000/checknotes";
+      if(responseText === 'success'){
+        location.href = "http://localhost:3000/checknotes";
+      } else {
+        alert(responseText);
+      }
     };
     $.post(formUrl,dataToSend,callBack);
   });

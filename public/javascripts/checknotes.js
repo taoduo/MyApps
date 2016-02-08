@@ -70,32 +70,36 @@ function bind() {
     var dataToSend=thisForm.serialize();
     //to do after the editing is successful
     var callBack=function(responseText) {
-      var date = new Date(Date.parse(responseText.date));
-      var datestr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-      var keywords = responseText.keywords;
-      $('#' + responseText._id + 'tag').html(responseText.tag);
-      var classToAdd;
-      switch (responseText.tag) {
-        case 'EXP':classToAdd = 'label-primary'; break;
-        case 'IDEA': classToAdd = 'label-info'; break;
-        default: classToAdd = 'label-default';
+      if(responseText.tag != null) {
+        var date = new Date(Date.parse(responseText.date));
+        var datestr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+        var keywords = responseText.keywords;
+        $('#' + responseText._id + 'tag').html(responseText.tag);
+        var classToAdd;
+        switch (responseText.tag) {
+          case 'EXP':classToAdd = 'label-primary'; break;
+          case 'IDEA': classToAdd = 'label-info'; break;
+          default: classToAdd = 'label-default';
+        }
+        if($('#' + responseText._id + 'tag').hasClass('label-info')) {
+          $('#' + responseText._id + 'tag').removeClass('label-info');
+        } else if($('#' + responseText._id + 'tag').hasClass('label-primary')) {
+          $('#' + responseText._id + 'tag').removeClass('label-primary');
+        } else if($('#' + responseText._id + 'tag').hasClass('label-default')) {
+          $('#' + responseText._id + 'tag').removeClass('label-default');
+        }
+        $('#' + responseText._id + 'tag').addClass(classToAdd);
+        $('#' + responseText._id + 'title').html(responseText.title + ' ');
+        $('#' + responseText._id + 'keywords').empty();
+        for(var i in keywords){
+          $('#' + responseText._id + 'keywords').append('<span class=\'label label-success\'>' + keywords[i] + '</span>&nbsp;');
+        }
+        $('#' + responseText._id + 'date').html(datestr);
+        $('#noteslist').prepend($('#' + responseText._id));
+        noteMap[responseText._id] = responseText;
+      } else {
+        alert(responseText);
       }
-      if($('#' + responseText._id + 'tag').hasClass('label-info')) {
-        $('#' + responseText._id + 'tag').removeClass('label-info');
-      } else if($('#' + responseText._id + 'tag').hasClass('label-primary')) {
-        $('#' + responseText._id + 'tag').removeClass('label-primary');
-      } else if($('#' + responseText._id + 'tag').hasClass('label-default')) {
-        $('#' + responseText._id + 'tag').removeClass('label-default');
-      }
-      $('#' + responseText._id + 'tag').addClass(classToAdd);
-      $('#' + responseText._id + 'title').html(responseText.title + ' ');
-      $('#' + responseText._id + 'keywords').empty();
-      for(var i in keywords){
-        $('#' + responseText._id + 'keywords').append('<span class=\'label label-success\'>' + keywords[i] + '</span>&nbsp;');
-      }
-      $('#' + responseText._id + 'date').html(datestr);
-      $('#noteslist').prepend($('#' + responseText._id));
-      noteMap[responseText._id] = responseText;
     };
     $.post(formUrl,dataToSend,callBack);
   });
@@ -115,8 +119,8 @@ function bind() {
         if(data === 'deleted') {
           $('#' + id).remove();
           delete noteMap[id];
-        } else if(data === 'err') {
-          alert('Deletion fail with error.');
+        } else {
+          alert(data);
         }
       }
     });

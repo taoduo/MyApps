@@ -28,5 +28,9 @@ block content
 				h3#keywords(name='keywords') Default_Keywords,
 			.form-group
 				textarea#mytextarea(name='details') Default_Details
-			.form-group
-				button#submitButton.btn.btn-success(type='button' accesskey='X') Submit
+			if login
+				.form-group
+					button#submitButton.btn.btn-success(type='button') Submit
+			else
+				.form-group
+					button#submitButton.btn.btn-success(type='button' disabled) Submit

@@ -56,3 +56,8 @@
   line-height: 1.33;
   border-radius: 35px;
 }
+input[name='adm-sw']{
+  position: relative;
+  bottom: 1px;
+  left:1px;
+}
