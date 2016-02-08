@@ -47,9 +47,20 @@ function init() {
     }
   });
   $( "#noteslist" ).sortable({
-    placeholder: "ui-state-highlight"
+    placeholder: "ui-state-highlight",
+    cursor:'move',
+    revert:200,
+    start:function(ev, ui) {
+       $(".ui-state-highlight").css({"height": "0px"});
+    },
+    change:function(ev, ui) {
+        $(".ui-state-highlight").css({"height": "0px"});
+        setTimeout(function(){
+            $(".ui-state-highlight").css({"height": "3em"});
+        },100);
+    }
   });
-  $( "#noteslist" ).disableSelection();
+  //$( "#noteslist" ).disableSelection();
 }
 function bind() {
   $('#editform').submit(function(event) {

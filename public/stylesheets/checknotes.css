@@ -1,1 +1,5 @@
-.ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+.ui-state-highlight {
+  opacity: 1;
+  -moz-transition: all 0.1s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+}
