@@ -60,7 +60,28 @@ function init() {
         },100);
     }
   });
-  //$( "#noteslist" ).disableSelection();
+  $( "#noteslist" ).disableSelection();
+  $("[name='adm-sw']").bootstrapSwitch();
+  $("input[name='adm-sw']").on('switchChange.bootstrapSwitch', function(event, state) {
+    if(state) {
+      $(document).keypress(function(event) {
+        enterTrack += String.fromCharCode(event.which);
+        if(enterTrack.length == 6) {
+          $.post(url + 'adm', {pw:enterTrack}, function(response) {
+            if(responseText === "adm") {
+              $('.editbtn').removeAttr('disabled');
+              $('.delbtn').removeAttr('disabled');
+            }
+          });
+          enterTrack = "";
+        }
+        return false;
+      });
+    } else {
+      enterTrack = "";
+      $(document).off('keypress');
+    }
+  });
 }
 function bind() {
   $('#editform').submit(function(event) {

@@ -129,9 +129,6 @@ function bind() {
         enterTrack += String.fromCharCode(event.which);
         if(enterTrack.length == 6) {
           $.post(url + 'adm', {pw:enterTrack}, function(response) {
-            if(response == 'adm') {
-
-            }
           });
           enterTrack = "";
         }

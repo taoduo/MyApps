@@ -3,3 +3,14 @@
   -moz-transition: all 0.1s ease-out;
   -webkit-transition: all 0.1s ease-out;
 }
+.footer {
+  position: static;
+  margin-left: 0;
+  z-index: -10;
+  font-size: 10px;
+}
+input[name='adm-sw']{
+  position: relative;
+  bottom: 1px;
+  left:1px;
+}

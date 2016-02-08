@@ -5,3 +5,14 @@ body {
 a {
   color: #00B7FF;
 }
+.footer {
+  position: static;
+  margin-left: 0;
+  z-index: -10;
+  font-size: 10px;
+}
+input[name='adm-sw']{
+  position: relative;
+  bottom: 1px;
+  left:1px;
+}

@@ -109,4 +109,24 @@ $(document).ready(function() {
     tinyMCE.triggerSave();
     $('#noteSubmitForm').submit();
   });
+  $("[name='adm-sw']").bootstrapSwitch();
+  $("input[name='adm-sw']").on('switchChange.bootstrapSwitch', function(event, state) {
+    if(state) {
+      $(document).keypress(function(event) {
+        enterTrack += String.fromCharCode(event.which);
+        if(enterTrack.length == 6) {
+          $.post(url + 'adm', {pw:enterTrack}, function(response) {
+            if(responseText === "adm") {
+              $('#submitButton').removeAttr('disabled');
+            }
+          });
+          enterTrack = "";
+        }
+        return false;
+      });
+    } else {
+      enterTrack = "";
+      $(document).off('keypress');
+    }
+  });
 });
