@@ -14,23 +14,22 @@ html
 		script(src='/javascripts/checknotes.js' type='text/javascript')
 
 	body
+		nav.navbar.navbar-default
+			.container-fluid
+				.navbar-header
+					button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+						span.sr-only Personal Website
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='http://localhost:3000/') Personal Website
+				#navbar.navbar-collapse.collapse
+					ul.nav.navbar-nav
+						li
+							a(href='http://localhost:3000/newnotes') New Notes
+						li.active
+							a(href='http://localhost:3000/checknotes') Check Notes
 		.container-fluid
-			nav.navbar.navbar-default
-				.container-fluid
-					.navbar-header
-						button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
-							span.sr-only Personal Website
-							span.icon-bar
-							span.icon-bar
-							span.icon-bar
-						a.navbar-brand(href='http://localhost:3000/') Personal Website
-					#navbar.navbar-collapse.collapse
-						ul.nav.navbar-nav
-							li
-								a(href='http://localhost:3000/newnotes') New Notes
-							li.active
-								a(href='http://localhost:3000/checknotes') Check Notes
-
 			.page-header(style="margin-top:10px")
 				.row
 					h1.col-sm-3(style="color:blue;margin-top:0px ") Check Notes
