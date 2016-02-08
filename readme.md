@@ -1,6 +1,7 @@
 # My Personal Website
 I have my youtube video here.
-\n[![Alt text for your video](http://img.youtube.com/vi/Qyi5vr4eFMQ/0.jpg)](https://youtu.be/Qyi5vr4eFMQ)
+
+[![Alt text for your video](http://img.youtube.com/vi/Qyi5vr4eFMQ/0.jpg)](https://youtu.be/Qyi5vr4eFMQ)
 
 ## Functional Description
 It primarily serves as my toolbox containing all applications I built for my own use. It is a dynamic project, which means I will put it here whenever I think of something useful and doable. The cover page and the tech learning notebook is ready. Here is my general plan for the time being.
