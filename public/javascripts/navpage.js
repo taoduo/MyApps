@@ -1,7 +1,7 @@
 var dragTrackTop = 0;
 var dragTrackLeft = 0;
 var enterTrack = "";
-var url = "http://localhost:3000/"
+var url = "http://localhost:3000/";
 $(document).ready(function() {
   init();
   bind();
@@ -129,6 +129,7 @@ function bind() {
         enterTrack += String.fromCharCode(event.which);
         if(enterTrack.length == 6) {
           $.post(url + 'adm', {pw:enterTrack}, function(response) {
+            $("input[name='adm-sw']").bootstrapSwitch('state', false, false);
           });
           enterTrack = "";
         }

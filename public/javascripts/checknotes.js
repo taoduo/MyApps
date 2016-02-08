@@ -1,4 +1,7 @@
 var noteMap = {};
+var enterTrack = "";
+var url = "http://localhost:3000/";
+
 $(document).ready(function(){
   init();
   bind();
@@ -68,9 +71,10 @@ function init() {
         enterTrack += String.fromCharCode(event.which);
         if(enterTrack.length == 6) {
           $.post(url + 'adm', {pw:enterTrack}, function(response) {
-            if(responseText === "adm") {
+            if(response === "adm") {
               $('.editbtn').removeAttr('disabled');
               $('.delbtn').removeAttr('disabled');
+              $("input[name='adm-sw']").bootstrapSwitch('state', false, false);
             }
           });
           enterTrack = "";

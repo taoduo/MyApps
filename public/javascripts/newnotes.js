@@ -1,3 +1,6 @@
+var enterTrack = "";
+var url = "http://localhost:3000/";
+
 tinymce.init({
   setup: function(editor) {
     editor.on('focus', function() {
@@ -116,8 +119,10 @@ $(document).ready(function() {
         enterTrack += String.fromCharCode(event.which);
         if(enterTrack.length == 6) {
           $.post(url + 'adm', {pw:enterTrack}, function(response) {
-            if(responseText === "adm") {
+            if(response === "adm") {
               $('#submitButton').removeAttr('disabled');
+              $("input[name='adm-sw']").prop("checked", false);
+              $("input[name='adm-sw']").bootstrapSwitch('state', false, false);
             }
           });
           enterTrack = "";

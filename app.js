@@ -50,6 +50,8 @@ app.post('/adm', function(req, res, next) {
   if(req.body.pw === 'duotao'){
     req.session.login = true;
     res.send('adm');
+  } else {
+    res.send('err');
   }
 });
 
