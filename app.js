@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var newnotes = require('./routes/newnotes');
 var checknotes = require('./routes/checknotes');
+var webbot = require('./routes/webbot');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var Note = require(__dirname + '/public/javascripts/note_model.js');
@@ -27,7 +28,7 @@ app.use(session({
   saveUninitialized: true
 }));
 
-
+app.use('/webbot', webbot);
 app.use('/checknotes', checknotes);
 app.use('/newnotes', newnotes);
 app.post('/getdata', function(req, res, next) {
