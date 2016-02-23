@@ -1,6 +1,6 @@
 var noteMap = {};
 var enterTrack = "";
-var url = "http://localhost:3000/";
+var url = "https://duos-personal-apps.herokuapp.com/";
 
 $(document).ready(function(){
   init();
@@ -41,7 +41,7 @@ function init() {
     ]
   });
 
-  $.post( 'http://localhost:3000/getdata', function( data ) {
+  $.post( url + 'getdata', function( data ) {
     var tempData = JSON.parse(data);
     for(i in tempData) {
       noteMap[tempData[i]._id] = tempData[i];
@@ -91,7 +91,7 @@ function bind() {
   $('#editform').submit(function(event) {
     event.preventDefault();
     var thisForm=$(this);
-    var formUrl='http://localhost:3000/checknotes';
+    var formUrl = url + 'checknotes';
     var dataToSend=thisForm.serialize();
     //to do after the editing is successful
     var callBack=function(responseText) {
@@ -133,7 +133,7 @@ function bind() {
     var regex = /(.*)delbtn/;
     var id = $(this).attr('id').match(regex)[1];
     $.ajax({
-      url: 'http://localhost:3000/checknotes',
+      url: url + 'checknotes',
       method: 'delete',
       data: {'id':id},
       beforeSend: function(){

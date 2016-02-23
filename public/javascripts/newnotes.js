@@ -1,5 +1,5 @@
 var enterTrack = "";
-var url = "http://localhost:3000/";
+var url = "https://duos-personal-apps.herokuapp.com/";
 
 tinymce.init({
   setup: function(editor) {
@@ -95,13 +95,13 @@ tinymce.init({
 $(document).ready(function() {
   $('#noteSubmitForm').submit(function(event) {
     event.preventDefault();
-    var thisForm=$(this);
-    var formUrl='http://localhost:3000/newnotes';
-    var dataToSend=thisForm.serialize();
+    var thisForm = $(this);
+    var formUrl = url + 'newnotes';
+    var dataToSend = thisForm.serialize();
     //to do after the editing is successful
     var callBack=function(responseText) {
       if(responseText === 'success'){
-        location.href = "http://localhost:3000/checknotes";
+        location.href = url + "checknotes";
       } else {
         alert(responseText);
       }

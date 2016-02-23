@@ -1,7 +1,7 @@
 var dragTrackTop = 0;
 var dragTrackLeft = 0;
 var enterTrack = "";
-var url = "http://localhost:3000/";
+var url = "https://duos-personal-apps.herokuapp.com/";
 $(document).ready(function() {
   init();
   bind();
@@ -67,10 +67,10 @@ function bind() {
     return true;
   });
   $('#notebook').click(function() {
-    location.href = "http://localhost:3000/checknotes";
+    location.href = url + "checknotes";
   });
   $('#scheduler').click(function() {
-    location.href = "http://localhost:3000/scheduler";
+    location.href = url + "scheduler";
   });
   $('#cleanUp').click(function(e) {
     if(dragTrackTop != 0 && dragTrackLeft != 0) {
