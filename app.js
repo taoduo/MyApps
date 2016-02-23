@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var newnotes = require('./routes/newnotes');
 var checknotes = require('./routes/checknotes');
 var webbot = require('./routes/webbot');
+var scheduler = require('./routes/scheduler');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var Note = require(__dirname + '/public/javascripts/note_model.js');
@@ -31,6 +32,8 @@ app.use(session({
 app.use('/webbot', webbot);
 app.use('/checknotes', checknotes);
 app.use('/newnotes', newnotes);
+app.use('/scheduler', scheduler);
+//get the data
 app.post('/getdata', function(req, res, next) {
   mongoose.connect('mongodb://localhost/test');
 	var db = mongoose.connection;
@@ -47,6 +50,7 @@ app.post('/getdata', function(req, res, next) {
 		}).sort('date');
 	});
 });
+//login
 app.post('/adm', function(req, res, next) {
   if(req.body.pw === 'duotao'){
     req.session.login = true;
@@ -55,7 +59,7 @@ app.post('/adm', function(req, res, next) {
     res.send('err');
   }
 });
-
+//get the navpage
 app.get('/', function(req, res, next) {
   res.render('navpage');
 });

@@ -69,6 +69,9 @@ function bind() {
   $('#notebook').click(function() {
     location.href = "http://localhost:3000/checknotes";
   });
+  $('#scheduler').click(function() {
+    location.href = "http://localhost:3000/scheduler";
+  });
   $('#cleanUp').click(function(e) {
     if(dragTrackTop != 0 && dragTrackLeft != 0) {
       dragTrackTop = 0;
