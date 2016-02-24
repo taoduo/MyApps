@@ -97,19 +97,15 @@ $(document).ready(function() {
     var thisForm = $(this);
     var formUrl = url + 'newnotes';
     var dataToSend = thisForm.serialize();
-    console.log('res');
     //to do after the submission is successful
     var callBack=function(responseText) {
       if(responseText === 'success'){
-        console.log(url + "checknotes");
         location.href = url + "checknotes";
       } else {
         alert(responseText);
       }
     };
-    $.post(formUrl,dataToSend,function(response) {
-      console.log(response);
-    });
+    $.post(formUrl,dataToSend,callBack);
   });
   $('#submitButton').click(function(event) {
     event.preventDefault();
