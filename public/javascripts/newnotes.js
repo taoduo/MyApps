@@ -111,7 +111,8 @@ $(document).ready(function() {
       console.log(response);
     });
   });
-  $('#submitButton').click(function() {
+  $('#submitButton').click(function(event) {
+    event.preventDefault();
     tinyMCE.triggerSave();
     $('#noteSubmitForm').submit();
   });
