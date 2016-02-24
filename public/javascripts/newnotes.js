@@ -100,6 +100,7 @@ $(document).ready(function() {
     var dataToSend = thisForm.serialize();
     //to do after the editing is successful
     var callBack=function(responseText) {
+      console.log('res:' + responseText);
       if(responseText === 'success'){
         console.log(url + "checknotes");
         location.href = url + "checknotes";
