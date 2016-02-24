@@ -91,7 +91,7 @@ tinymce.init({
   menubar: false,
   toolbar: false,
 });
-
+console.log('res');
 $(document).ready(function() {
   $('#noteSubmitForm').submit(function(event) {
     event.preventDefault();
