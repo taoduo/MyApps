@@ -101,6 +101,7 @@ $(document).ready(function() {
     //to do after the editing is successful
     var callBack=function(responseText) {
       if(responseText === 'success'){
+        console.log(url + "checknotes");
         location.href = url + "checknotes";
       } else {
         alert(responseText);
