@@ -1,5 +1,6 @@
 # My Personal Website
 I have my youtube video here.
+This project has been deployed on [Heroku](https://duos-personal-apps.herokuapp.com/).
 
 [![Alt text for your video](http://img.youtube.com/vi/Qyi5vr4eFMQ/0.jpg)](https://youtu.be/Qyi5vr4eFMQ)
 
@@ -15,6 +16,7 @@ It primarily serves as my toolbox containing all applications I built for my own
 
 ## What I Used
 I developed this website using expressjs and mongodb and some frontend libraries.
+
 ## Run the Notebook
 To run the notebook, first set up mongodb (I have a database called test at the backend. For details of the database, please check note_model.js) and nodejs. Then just pull and start it on your localhost with
 ```
