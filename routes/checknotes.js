@@ -35,7 +35,7 @@ router.post('/', function(req, res, next) {
   	var regex1 = new RegExp('\(#([^)]+)\)');
   	var matches = regex1.exec(req.body.id);
   	var id = matches[2];
-  	mongoose.connect('mongodb://localhost/test');
+  	mongoose.connect('mongodb://taoduo:Bonanza2016@ds015508.mongolab.com:15508/mynotes');
   	var db = mongoose.connection;
   	db.on('error', console.error.bind(console, 'connection error:'));
   	db.once('open', function(callback) {
@@ -70,7 +70,7 @@ router.post('/', function(req, res, next) {
 //to delete a note
 router.delete('/', function(req, res, next) {
   if(req.session.login) {
-  	mongoose.connect('mongodb://localhost/test');
+  	mongoose.connect('mongodb://taoduo:Bonanza2016@ds015508.mongolab.com:15508/mynotes');
   	var db = mongoose.connection;
   	db.on('error', console.error.bind(console, 'connection error:'));
   	db.once('open', function() {
