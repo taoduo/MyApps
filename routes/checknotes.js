@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Note = require(__dirname + '/../public/javascripts/note_model.js');
 //to show all notes
 router.get('/', function(req, res, next) {
-	mongoose.connect('mongodb://localhost/test');
+	mongoose.connect('mongodb://taoduo:Bonanza2016@ds015508.mongolab.com:15508/mynotes');
 	var db = mongoose.connection;
 	db.on('error', console.error.bind(console, 'connection error:'));
 	db.once('open', function(callback) {
