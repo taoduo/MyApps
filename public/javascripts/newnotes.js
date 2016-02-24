@@ -98,7 +98,7 @@ $(document).ready(function() {
     var formUrl = url + 'newnotes';
     var dataToSend = thisForm.serialize();
     console.log('res');
-    //to do after the editing is successful
+    //to do after the submission is successful
     var callBack=function(responseText) {
       if(responseText === 'success'){
         console.log(url + "checknotes");
@@ -107,7 +107,9 @@ $(document).ready(function() {
         alert(responseText);
       }
     };
-    $.post(formUrl,dataToSend,callBack);
+    $.post(formUrl,dataToSend,function(response) {
+      console.log(response);
+    });
   });
   $('#submitButton').click(function() {
     tinyMCE.triggerSave();
