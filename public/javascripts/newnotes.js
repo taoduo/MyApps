@@ -91,16 +91,15 @@ tinymce.init({
   menubar: false,
   toolbar: false,
 });
-console.log('res');
 $(document).ready(function() {
   $('#noteSubmitForm').submit(function(event) {
     event.preventDefault();
     var thisForm = $(this);
     var formUrl = url + 'newnotes';
     var dataToSend = thisForm.serialize();
+    console.log('res');
     //to do after the editing is successful
     var callBack=function(responseText) {
-      console.log('res:' + responseText);
       if(responseText === 'success'){
         console.log(url + "checknotes");
         location.href = url + "checknotes";
