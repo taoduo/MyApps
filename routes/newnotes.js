@@ -27,7 +27,7 @@ router.post('/', function(req, res, next) {
   		date: date,
   		tag: tag,
   	});
-  	mongoose.connect('mongodb://localhost/test');
+  	mongoose.connect('mongodb://taoduo:Bonanza2016@ds015508.mongolab.com:15508/mynotes');
   	var db = mongoose.connection;
   	db.on('error', console.error.bind(console, 'connection error:'));
   	db.once('open', function(callback) {
