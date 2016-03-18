@@ -20,6 +20,7 @@ I developed this website using expressjs and mongodb and some frontend libraries
 ## Run the Notebook
 To run the notebook, first set up mongodb (I have a database called test at the backend. For details of the database, please check note_model.js) and nodejs. Then just pull and start it on your localhost with
 ```
+npm install
 npm start
 ```
 Thank you!
