@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var newnotes = require('./routes/newnotes');
 var checknotes = require('./routes/checknotes');
+var visionProtector = require('./routes/visionProtector');
 var webbot = require('./routes/webbot');
 var scheduler = require('./routes/scheduler');
 var mongoose = require('mongoose');
@@ -35,6 +36,8 @@ app.use('/webbot', webbot);
 app.use('/checknotes', checknotes);
 app.use('/newnotes', newnotes);
 app.use('/scheduler', scheduler);
+app.use('/visionProtector', visionProtector);
+
 //get the data
 app.post('/getdata', function(req, res, next) {
   mongoose.connect('mongodb://taoduo:Bonanza2016@ds015508.mongolab.com:15508/mynotes');

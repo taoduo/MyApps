@@ -51,6 +51,7 @@ function init() {
   });
   $("[name='adm-sw']").bootstrapSwitch();
 }
+
 function bind() {
   $('.app').draggable();
   $('#resumeDownload').draggable();
@@ -71,6 +72,9 @@ function bind() {
   });
   $('#scheduler').click(function() {
     location.href = url + "scheduler";
+  });
+	$('#visionProtector').click(function() {
+    location.href = url + "visionProtector";
   });
   $('#cleanUp').click(function(e) {
     if(dragTrackTop != 0 && dragTrackLeft != 0) {
