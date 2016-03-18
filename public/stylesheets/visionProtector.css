@@ -9,4 +9,5 @@ body {
 	width: 500px;
 	top: 0px;
 	height: 100%;
+	z-index: -1;
 }
