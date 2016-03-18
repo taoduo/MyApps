@@ -12,6 +12,8 @@ var scheduler = require('./routes/scheduler');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var Note = require(__dirname + '/public/javascripts/note_model.js');
+
+
 var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

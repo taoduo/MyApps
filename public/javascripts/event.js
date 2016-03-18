@@ -1,11 +1,11 @@
+//this is the data base template for an event
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var eventSchema = new Schema({
-	id: Number,
-	start_date: [],
-	end_date: Date,
-	text: String,
+	start: Date,
+	end: Date,
+	title: String,
 	place: String,
   details: String
 });
