@@ -83,7 +83,7 @@ $(window).load(function() {
 	});
 
 	//initialize the timer
-	timer.setStartTime(0,5);
+	timer.setStartTime(20,0);
 	timer.startTimer();
 	bind();
 });
