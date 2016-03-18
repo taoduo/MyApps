@@ -38,12 +38,14 @@ class Timer {
 		clearInterval(this.counter);
 		if (!this.breakFlag) {
 			this.context.css('color','red');
+			$('#beep').get(0).play();
 			alert("Take a break!");
 			this.breakFlag = true;
 			this.setStartTime(0,20);
 			this.startTimer();
 		} else {
 			this.context.css('color','black');
+			$('#beep').get(0).play();
 			alert("Continue working~");
 			this.breakFlag = true;
 			this.setStartTime(20,0);
@@ -81,7 +83,7 @@ $(window).load(function() {
 	});
 
 	//initialize the timer
-	timer.setStartTime(20,0);
+	timer.setStartTime(0,5);
 	timer.startTimer();
 	bind();
 });
