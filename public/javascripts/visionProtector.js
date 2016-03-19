@@ -98,7 +98,7 @@ function Timer(context) {
 			context.css('color','black');
 			$('#beep').get(0).play();
 			alert("Continue working~");
-			breakFlag = true;
+			breakFlag = false;
 			t.setStartTime(20,0);
 			t.startTimer();
 		}
