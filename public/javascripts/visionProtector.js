@@ -147,7 +147,7 @@ $(window).load(function() {
 	});
 
 	//initialize the timer
-	timer.setStartTime(20,0);
+	timer.setStartTime(0,20);
 	timer.startTimer();
 	bind();
 });
