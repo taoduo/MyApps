@@ -102,14 +102,14 @@ function Timer(context) {
 	function timerAlert() {
 		clearInterval(this.counter);
 		if (!breakFlag) {
-			this.context.css('color','red');
+			context.css('color','red');
 			$('#beep').get(0).play();
 			alert("Take a break!");
 			breakFlag = true;
 			this.setStartTime(0,20);
 			this.startTimer();
 		} else {
-			this.context.css('color','black');
+			context.css('color','black');
 			$('#beep').get(0).play();
 			alert("Continue working~");
 			breakFlag = true;
