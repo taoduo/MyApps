@@ -67,7 +67,7 @@ var timer;
 function Timer(context) {
 	this.context = context;
 	this.breakFlag = false;
-	this.formatTimeElement = function(time){
+	function formatTimeElement = function(time) {
 		return time < 10 ? "0" + time : time;
 	};
 
@@ -86,7 +86,7 @@ function Timer(context) {
 		if (min > 60) {
 			console.log("does not work for more than 60 minutes");
 		}
-		this.time = new Date(0,0,0,0,min,sec);
+		this.time = new Date(0, 0, 0, 0, min, sec);
 		this.context.find('#minute').text(this.formatTimeElement(this.time.getMinutes()));
 		this.context.find('#second').text(this.formatTimeElement(this.time.getSeconds()));
 	}
