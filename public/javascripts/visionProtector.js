@@ -81,7 +81,7 @@ function Timer(context) {
 			return;
 		}
 	};
-
+	//member functions
 	this.setStartTime = function(min, sec) {
 		if (min > 60) {
 			console.log("does not work for more than 60 minutes");
@@ -92,9 +92,8 @@ function Timer(context) {
 	}
 
 	this.startTimer = function() {
-		var t = this;
 		this.counter = setInterval(function() {
-			t.countDownByOneSecond();
+			countDownByOneSecond();
 		}, 1000);
 	}
 
@@ -122,9 +121,8 @@ function Timer(context) {
 	}
 
 	this.resume = function() {
-		var t = this;
 		this.counter = setInterval(function() {
-			t.countDownByOneSecond();
+			countDownByOneSecond();
 		}, 1000);
 	}
 }
