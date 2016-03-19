@@ -110,6 +110,7 @@ $(document).ready(function() {
   $('#submitButton').click(function(event) {
     event.preventDefault();
     tinyMCE.triggerSave();
+		$('#submitButton').prop('disabled',true);
     $('#noteSubmitForm').submit();
   });
   $("[name='adm-sw']").bootstrapSwitch();
