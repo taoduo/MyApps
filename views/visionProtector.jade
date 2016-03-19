@@ -17,8 +17,3 @@ block content
 					li
 						a(href='https://duos-personal-apps.herokuapp.com/checknotes') Check Notes
 	iframe#timerFrame(src='timer.html', allowtransparency='true', frameborder='0')
-	script(type="text/javascript").
-		//adjust the frame position
-		var windowWidth = $(window).width();
-		var frameWidth = $("#timerFrame").width();
-		$("#timerFrame").offset({"left":(windowWidth - frameWidth)/2});
