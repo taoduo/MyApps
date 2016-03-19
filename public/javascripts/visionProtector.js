@@ -99,7 +99,7 @@ function Timer(context) {
 		}, 1000);
 	}
 
-	 function timerAlert {
+	function timerAlert() {
 		clearInterval(this.counter);
 		if (!breakFlag) {
 			this.context.css('color','red');
