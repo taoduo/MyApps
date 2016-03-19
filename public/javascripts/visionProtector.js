@@ -1,6 +1,6 @@
 /*javascript for the timer, inside the frame*/
 var timer;
-class Timer {
+/*class Timer {
 	constructor(context) {
 		this.context = context;
 		this.breakFlag = false;
@@ -58,6 +58,70 @@ class Timer {
 	}
 
 	resume() {
+		var t = this;
+		this.counter = setInterval(function() {
+			t.countDownByOneSecond();
+		}, 1000);
+	}
+}*/
+function Timer(context) {
+	this.context = context;
+	this.breakFlag = false;
+	this.formatTimeElement = function(time){
+		return time < 10 ? "0" + time : time;
+	};
+
+	//private method
+	function countDownByOneSecond() {
+		this.time = new Date(this.time.getTime() - 1000);
+		this.context.find('#minute').text(this.formatTimeElement(this.time.getMinutes()));
+		this.context.find('#second').text(this.formatTimeElement(this.time.getSeconds()));
+		if(this.time <= new Date(0,0,0,0,0,0)) {
+			this.timerAlert();
+			return;
+		}
+	};
+
+	this.setStartTime = function(min, sec) {
+		if (min > 60) {
+			console.log("does not work for more than 60 minutes");
+		}
+		this.time = new Date(0,0,0,0,min,sec);
+		this.context.find('#minute').text(this.formatTimeElement(this.time.getMinutes()));
+		this.context.find('#second').text(this.formatTimeElement(this.time.getSeconds()));
+	}
+
+	this.startTimer = function() {
+		var t = this;
+		this.counter = setInterval(function() {
+			t.countDownByOneSecond();
+		}, 1000);
+	}
+
+	this.timerAlert = function() {
+		clearInterval(this.counter);
+		if (!this.breakFlag) {
+			this.context.css('color','red');
+			$('#beep').get(0).play();
+			alert("Take a break!");
+			this.breakFlag = true;
+			this.setStartTime(0,20);
+			this.startTimer();
+		} else {
+			this.context.css('color','black');
+			$('#beep').get(0).play();
+			alert("Continue working~");
+			this.breakFlag = true;
+			this.setStartTime(20,0);
+			this.startTimer();
+		}
+	}
+
+	this.pause = function() {
+		clearInterval(this.counter);
+	}
+
+	this.resume = function() {
 		var t = this;
 		this.counter = setInterval(function() {
 			t.countDownByOneSecond();
