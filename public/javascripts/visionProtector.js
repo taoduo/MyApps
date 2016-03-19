@@ -67,6 +67,7 @@ var timer;
 function Timer(context) {
 	//private variables
 	var context = context;
+	var t = this;
 	var breakFlag = false;
 	var time;
 	//private methods
@@ -106,15 +107,15 @@ function Timer(context) {
 			$('#beep').get(0).play();
 			alert("Take a break!");
 			breakFlag = true;
-			this.setStartTime(0,20);
-			this.startTimer();
+			t.setStartTime(0,20);
+			t.startTimer();
 		} else {
 			context.css('color','black');
 			$('#beep').get(0).play();
 			alert("Continue working~");
 			breakFlag = true;
-			this.setStartTime(20,0);
-			this.startTimer();
+			t.setStartTime(20,0);
+			t.startTimer();
 		}
 	}
 
