@@ -76,8 +76,8 @@ function Timer(context) {
 
 	function countDownByOneSecond() {
 		time = new Date(time.getTime() - 1000);
-		context.find('#minute').text(this.formatTimeElement(time.getMinutes()));
-		context.find('#second').text(this.formatTimeElement(time.getSeconds()));
+		context.find('#minute').text(formatTimeElement(time.getMinutes()));
+		context.find('#second').text(formatTimeElement(time.getSeconds()));
 		if(time <= new Date(0,0,0,0,0,0)) {
 			this.timerAlert();
 			return;
