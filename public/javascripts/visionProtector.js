@@ -3,7 +3,7 @@ var timer;
 /*class Timer {
 	constructor(context) {
 		this.context = context;
-		this.breakFlag = false;
+		breakFlag = false;
 		this.formatTimeElement = function(time){
 			return time < 10 ? "0" + time : time;
 		};
@@ -36,18 +36,18 @@ var timer;
 
 	timerAlert() {
 		clearInterval(this.counter);
-		if (!this.breakFlag) {
+		if (!breakFlag) {
 			this.context.css('color','red');
 			$('#beep').get(0).play();
 			alert("Take a break!");
-			this.breakFlag = true;
+			breakFlag = true;
 			this.setStartTime(0,20);
 			this.startTimer();
 		} else {
 			this.context.css('color','black');
 			$('#beep').get(0).play();
 			alert("Continue working~");
-			this.breakFlag = true;
+			breakFlag = true;
 			this.setStartTime(20,0);
 			this.startTimer();
 		}
@@ -65,18 +65,20 @@ var timer;
 	}
 }*/
 function Timer(context) {
-	this.context = context;
-	this.breakFlag = false;
-	function formatTimeElement = function(time) {
+	//private variables
+	var context = context;
+	var breakFlag = false;
+	var time;
+	//private methods
+	function formatTimeElement() {
 		return time < 10 ? "0" + time : time;
 	};
 
-	//private method
 	function countDownByOneSecond() {
-		this.time = new Date(this.time.getTime() - 1000);
-		this.context.find('#minute').text(this.formatTimeElement(this.time.getMinutes()));
-		this.context.find('#second').text(this.formatTimeElement(this.time.getSeconds()));
-		if(this.time <= new Date(0,0,0,0,0,0)) {
+		time = new Date(time.getTime() - 1000);
+		context.find('#minute').text(this.formatTimeElement(time.getMinutes()));
+		context.find('#second').text(this.formatTimeElement(time.getSeconds()));
+		if(time <= new Date(0,0,0,0,0,0)) {
 			this.timerAlert();
 			return;
 		}
@@ -86,9 +88,9 @@ function Timer(context) {
 		if (min > 60) {
 			console.log("does not work for more than 60 minutes");
 		}
-		this.time = new Date(0, 0, 0, 0, min, sec);
-		this.context.find('#minute').text(this.formatTimeElement(this.time.getMinutes()));
-		this.context.find('#second').text(this.formatTimeElement(this.time.getSeconds()));
+		time = new Date(0, 0, 0, 0, min, sec);
+		context.find('#minute').text(this.formatTimeElement(time.getMinutes()));
+		context.find('#second').text(this.formatTimeElement(time.getSeconds()));
 	}
 
 	this.startTimer = function() {
@@ -99,18 +101,18 @@ function Timer(context) {
 
 	this.timerAlert = function() {
 		clearInterval(this.counter);
-		if (!this.breakFlag) {
+		if (!breakFlag) {
 			this.context.css('color','red');
 			$('#beep').get(0).play();
 			alert("Take a break!");
-			this.breakFlag = true;
+			breakFlag = true;
 			this.setStartTime(0,20);
 			this.startTimer();
 		} else {
 			this.context.css('color','black');
 			$('#beep').get(0).play();
 			alert("Continue working~");
-			this.breakFlag = true;
+			breakFlag = true;
 			this.setStartTime(20,0);
 			this.startTimer();
 		}
