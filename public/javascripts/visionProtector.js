@@ -89,8 +89,8 @@ function Timer(context) {
 			console.log("does not work for more than 60 minutes");
 		}
 		time = new Date(0, 0, 0, 0, min, sec);
-		context.find('#minute').text(this.formatTimeElement(time.getMinutes()));
-		context.find('#second').text(this.formatTimeElement(time.getSeconds()));
+		context.find('#minute').text(formatTimeElement(time.getMinutes()));
+		context.find('#second').text(formatTimeElement(time.getSeconds()));
 	}
 
 	this.startTimer = function() {
