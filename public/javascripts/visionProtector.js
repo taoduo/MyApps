@@ -73,7 +73,7 @@ function Timer(context) {
 	//private methods
 	function formatTimeElement(time) {
 		return time < 10 ? "0" + time : time;
-	};
+	}
 
 	function countDownByOneSecond() {
 		time = new Date(time.getTime() - 1000);
@@ -83,25 +83,10 @@ function Timer(context) {
 			timerAlert();
 			return;
 		}
-	};
-	//member functions
-	this.setStartTime = function(min, sec) {
-		if (min > 60) {
-			console.log("does not work for more than 60 minutes");
-		}
-		time = new Date(0, 0, 0, 0, min, sec);
-		context.find('#minute').text(formatTimeElement(time.getMinutes()));
-		context.find('#second').text(formatTimeElement(time.getSeconds()));
-	}
-
-	this.startTimer = function() {
-		this.counter = setInterval(function() {
-			countDownByOneSecond();
-		}, 1000);
 	}
 
 	function timerAlert() {
-		clearInterval(this.counter);
+		clearInterval(t.counter);
 		if (!breakFlag) {
 			context.css('color','red');
 			$('#beep').get(0).play();
@@ -118,16 +103,31 @@ function Timer(context) {
 			t.startTimer();
 		}
 	}
+	//member functions
+	this.setStartTime = function(min, sec) {
+		if (min > 60) {
+			console.log("does not work for more than 60 minutes");
+		}
+		time = new Date(0, 0, 0, 0, min, sec);
+		context.find('#minute').text(formatTimeElement(time.getMinutes()));
+		context.find('#second').text(formatTimeElement(time.getSeconds()));
+	};
+
+	this.startTimer = function() {
+		this.counter = setInterval(function() {
+			countDownByOneSecond();
+		}, 1000);
+	};
 
 	this.pause = function() {
 		clearInterval(this.counter);
-	}
+	};
 
 	this.resume = function() {
 		this.counter = setInterval(function() {
 			countDownByOneSecond();
 		}, 1000);
-	}
+	};
 }
 
 function bind() {
