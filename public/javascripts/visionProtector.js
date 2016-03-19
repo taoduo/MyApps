@@ -70,7 +70,7 @@ function Timer(context) {
 	var breakFlag = false;
 	var time;
 	//private methods
-	function formatTimeElement() {
+	function formatTimeElement(time) {
 		return time < 10 ? "0" + time : time;
 	};
 
