@@ -79,7 +79,7 @@ function Timer(context) {
 		context.find('#minute').text(formatTimeElement(time.getMinutes()));
 		context.find('#second').text(formatTimeElement(time.getSeconds()));
 		if(time <= new Date(0,0,0,0,0,0)) {
-			this.timerAlert();
+			timerAlert();
 			return;
 		}
 	};
@@ -99,7 +99,7 @@ function Timer(context) {
 		}, 1000);
 	}
 
-	this.timerAlert = function() {
+	 function timerAlert {
 		clearInterval(this.counter);
 		if (!breakFlag) {
 			this.context.css('color','red');
@@ -132,10 +132,14 @@ function Timer(context) {
 function bind() {
 	$("#pauseBtn").click(function() {
 		timer.pause();
+		$("#pauseBtn").prop('disabled', true);
+		$("#resumeBtn").prop('disabled', false);
 	});
 
 	$("#resumeBtn").click(function() {
 		timer.resume();
+		$("#pauseBtn").prop('disabled', false);
+		$("#resumeBtn").prop('disabled', true);
 	});
 }
 $(window).load(function() {
@@ -149,5 +153,7 @@ $(window).load(function() {
 	//initialize the timer
 	timer.setStartTime(0,20);
 	timer.startTimer();
+	$("#pauseBtn").prop('disabled', false);
+	$("#resumeBtn").prop('disabled', true);
 	bind();
 });
