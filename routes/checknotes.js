@@ -23,6 +23,7 @@ router.get('/', function(req, res, next) {
 		}).sort('date');
 	});
 });
+
 //to update a note
 router.post('/', function(req, res, next) {
   if(req.session.login) {

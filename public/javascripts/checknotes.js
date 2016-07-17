@@ -2,7 +2,7 @@ var noteMap = {};
 var enterTrack = "";
 var url = "https://duos-personal-apps.herokuapp.com/";
 
-$(document).ready(function(){
+$(document).ready(function() {
   init();
   bind();
 });
@@ -87,6 +87,7 @@ function init() {
     }
   });
 }
+
 function bind() {
   $('#editform').submit(function(event) {
     event.preventDefault();
@@ -166,6 +167,8 @@ function bind() {
     for(i in keywords) {
       if(i != keywords.length - 1) {
         keywordsstr += keywords[i] + ",";
+      } else {
+        keywordsstr += keywords[i];
       }
     }
     //show the form and fill in the values
@@ -218,6 +221,7 @@ function bind() {
     return false;
   });
 }
+
 function compareByRelevance(a,b) {
   if (a.relevance > b.relevance)
     return -1;
@@ -226,6 +230,7 @@ function compareByRelevance(a,b) {
   else
     return 0;
 }
+
 function compareByDate(a,b) {
   if (a.date > b.date)
     return -1;
@@ -256,6 +261,7 @@ function editFormSubmit() {
   tinyMCE.triggerSave();
   $('#editform').submit();
 }
+
 function stringMatch(smallStr, bigStr) {
   var match = 0;
   var small = smallStr.toLowerCase();
@@ -268,6 +274,7 @@ function stringMatch(smallStr, bigStr) {
   }
   return match;
 }
+
 function getRelevance(search, note) {
   var relevance;
   var r1 = stringMatch(search, note.tag);
