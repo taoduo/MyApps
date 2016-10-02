@@ -8,8 +8,6 @@ var bodyParser = require('body-parser');
 var newnotes = require('./routes/newnotes');
 var checknotes = require('./routes/checknotes');
 var visionProtector = require('./routes/visionProtector');
-var webbot = require('./routes/webbot');
-var scheduler = require('./routes/scheduler');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var Note = require(__dirname + '/public/javascripts/note_model.js');
@@ -32,13 +30,12 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use('/webbot', webbot);
+// routes
 app.use('/checknotes', checknotes);
 app.use('/newnotes', newnotes);
-app.use('/scheduler', scheduler);
 app.use('/visionProtector', visionProtector);
 
-//get the data
+// get the data
 app.post('/getdata', function(req, res, next) {
   mongoose.connect('mongodb://taoduo:Bonanza2016@ds015508.mongolab.com:15508/mynotes');
 	var db = mongoose.connection;
