@@ -4,32 +4,29 @@
   height: 100%;
   width: 100%;
   opacity: 0.5;
-}
-
-.footer {
-  position: fixed;
-  left: 10px;
-  bottom: 10px;
   z-index: -10;
-  font-size: 10px;
 }
 
 .app {
   width: 200px;
 }
+h5.app-name {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
 
-.page-header h1 {
+.page-title h1 {
   color: green;
   text-align: center;
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
-.app-icon {
+i.app-icon {
   font-size:120px;
   color:black;
   text-shadow:2px 2px 4px #000000;
   cursor:pointer
 }
+
 
 .btn-circle {
   width: 30px;
@@ -55,6 +52,13 @@
   font-size: 24px;
   line-height: 1.33;
   border-radius: 35px;
+}
+.footer {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  z-index: 0;
+  font-size: 10px;
 }
 input[name='adm-sw']{
   position: relative;
