@@ -1,3 +1,11 @@
+.background {
+  background-image: url('../images/background.jpg');
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+}
+
 .footer {
   position: fixed;
   left: 10px;
@@ -5,32 +13,23 @@
   z-index: -10;
   font-size: 10px;
 }
-.clearfix:before, .clearfix:after { content: " "; display: table; }
-.clearfix:after { clear: both; }
-.clearfix { *zoom: 1; }
+
 .app {
-  position: absolute;
   width: 200px;
 }
 
 .page-header h1 {
-  color: grey;
-}
-#cleanUp {
-  position: absolute;
-}
-.openPopup {
-  position: absolute;
-  font-size: 30pt;
-  background-color: black;
-  color: white;
-  z-index: 10;
-  margin-left: auto;
-  margin-right: auto;
-  width:100%;
-  top:50%;
+  color: green;
   text-align: center;
 }
+
+.app-icon {
+  font-size:120px;
+  color:black;
+  text-shadow:2px 2px 4px #000000;
+  cursor:pointer
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;

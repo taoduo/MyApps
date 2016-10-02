@@ -17,35 +17,18 @@ html
 		script(src="/javascripts/navpage.js" type='text/javascript')
 
 	body
-		#pop1.openPopup
-			p Why always so organized?
-		#pop2.openPopup
-			p Let's just enjoy some spontaneity today.
-		.container-fluid
+		.background
+		.container
 			.page-header
-				h1#pageHeader(style="display:inline") App Table
-				button#cleanUp.btn.btn-primary.pull-right(style='position:absolute;right:10px' disabled) Clean Up
+				h1.pageHeader Have a Nice Day!
 			#resumeDownload.small.orange.pull-right(data-percent='0' style="display:inline;cursor:pointer")
 			.row
 				#notebook.col-sm-2.col-xs-6.col-sm-6.col-md-3.text-center.leftspan.app
-					i.fa.fa-pencil-square-o(style="font-size:120px;color:black;text-shadow:2px 2px 4px #000000;cursor:pointer")
+					i.fa.fa-pencil-square-o.app-icon(style='color:blue')
 					h5 Notebook
-				#scheduler.col-sm-2.col-xs-6.col-sm-6.col-md-3.text-center.leftspan.app
-					i.fa.fa-calendar(style="font-size:120px;color:black;text-shadow:2px 2px 4px #000000;cursor:pointer")
-					h5 Scheduler
 				#visionProtector.col-sm-2.col-xs-6.col-sm-6.col-md-3.text-center.leftspan.app
-					i.glyphicon.glyphicon-eye-open(style="font-size:120px;color:black;text-shadow:2px 2px 4px #000000;cursor:pointer")
+					i.glyphicon.glyphicon-eye-open.app-icon	(style='color:red')
 					h5 Vision Protector
-				.col-sm-2.col-xs-6.col-sm-6.col-md-3.text-center.leftspan.app
-					i.fa.fa-anchor(style="font-size:120px;color:black;text-shadow:2px 2px 4px #000000;cursor:pointer")
-					h5 Dummy
-			.row
-				.col-sm-2.col-xs-6.col-sm-6.col-md-3.text-center.leftspan.app
-					i.fa.fa-anchor(style="font-size:120px;color:black;text-shadow:2px 2px 4px #000000;cursor:pointer")
-					h5 Dummy
-				.col-sm-2.col-xs-6.col-sm-6.col-md-3.text-center.leftspan.app
-					i.fa.fa-anchor(style="font-size:120px;color:black;text-shadow:2px 2px 4px #000000;cursor:pointer")
-					h5 Dummy
 			footer.footer(style="background-color:#ffffff")
 				p Made by Duo Tao @ 2015
 				input#adm-sw(data-size="mini" type="checkbox" name="adm-sw")

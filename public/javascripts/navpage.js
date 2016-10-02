@@ -8,41 +8,6 @@ $(document).ready(function() {
 });
 function init() {
   var apps = $(".app");
-  cleanUpPos = $('#cleanUp').position();
-  apps.hide();
-  $(".openPopup").hide();
-  apps.each(function(i, app) {
-    var posx = (Math.random() * ($(document).width()-app.style.width)).toFixed();
-    var posy = (Math.random() * ($(document).height()-app.style.height)).toFixed();
-    app.style.left = posx+"px";
-    app.style.top = posy+"px";
-  });
-  //$('.page-header h1').draggable();
-  var randx1 = (1.5 + Math.random()) * ($(document).width()).toFixed();
-  var randy1 = (1.5 + Math.random()) * ($(document).height()).toFixed();
-  var randx2 = (1.5 + Math.random()) * ($(document).width()).toFixed();
-  var randy2 = (1.5 + Math.random()) * ($(document).height()).toFixed();
-  var p1x = (binaryRand() * 2 - 1) * randx1;
-  var p1y = (binaryRand() * 2 - 1) * randy1;
-  var p2x = (binaryRand() * 2 - 1) * randx2;
-  var p2y = (binaryRand() * 2 - 1) * randy2;
-  $("#pop1").show('fade',1000,function() {
-    $("#pop2").show('fade',1500,function() {
-      $("#pop2").delay(1000).animate({"left":p1x + "px","top":p1y + "px"},200, function() {
-        $("#pop2").remove();
-        $("#pop1").animate({"left":p2x + "px","top":p2y + "px"},200, function() {
-          apps.show("fade", 1000);
-          apps.each(function(i, app) {
-            var color = getRandomColor();
-            app.style.color = color;
-            app.getElementsByTagName('i')[0].style.color = color;
-            $('#pop1').remove();
-          });
-          $('#cleanUp').prop('disabled', false);
-        });
-      });
-    });
-  });
   $(function(){
     $("[id$='circle']").percircle();
     $('#resumeDownload').percircle({
@@ -70,32 +35,8 @@ function bind() {
   $('#notebook').click(function() {
     location.href = url + "checknotes";
   });
-  $('#scheduler').click(function() {
-    location.href = url + "scheduler";
-  });
 	$('#visionProtector').click(function() {
     location.href = url + "visionProtector";
-  });
-  $('#cleanUp').click(function(e) {
-    if(dragTrackTop != 0 && dragTrackLeft != 0) {
-      dragTrackTop = 0;
-      dragTrackLeft = 0;
-    } else {
-      cleanUpHelper();
-    }
-  });
-  $('#cleanUp').draggable({
-    cancel: false,
-    start: function(event, ui) {
-      dragTrackTop = ui.position.top;
-      dragTrackLeft = ui.position.left;
-    },
-    stop: function(event, ui) {
-      var tempTop = ui.position.top;
-      var tempLeft = ui.position.left;
-      dragTrackTop = tempTop - dragTrackTop;
-      dragTrackLeft = tempLeft = dragTrackLeft;
-    }
   });
   //needs to track the download progress
   $('#resumeDownload').click(function(e) {
@@ -178,52 +119,4 @@ Object.size = function(obj) {
     if (obj.hasOwnProperty(key)) size++;
   }
   return size;
-}
-function cleanUpHelper() {
-  var positionArray = [];
-  var cleanUpPos;
-  var downloadPos;
-  $('.app').each(function(i, appdom) {
-    var app = $(appdom);
-    app.css({
-      visibility: 'hidden',
-      position: 'static'
-    });
-    var staticPosition = app.position();
-    positionArray.push(staticPosition);
-  });
-  $('.app').each(function(i, appdom) {
-    var app = $(appdom);
-    app.css({
-      visibility: 'visible',
-      position: 'absolute'
-    }).animate({
-      'top': positionArray[i].top + "px",
-      'left': positionArray[i].left + "px"
-    });
-  });
-  $('#cleanUp').css({
-    visibility: 'hidden',
-    position: 'static'
-  });
-  cleanUpPos = $('#cleanUp').position();
-  $('#cleanUp').css({
-    visibility: 'visible',
-    position: 'absolute'
-  }).animate({
-    'top': cleanUpPos.top + "px",
-    'left': cleanUpPos.left + "px"
-  });
-  $('#resumeDownload').css({
-    visibility: 'hidden',
-    position: 'static'
-  });
-  downloadPos = $('#resumeDownload').position();
-  $('#resumeDownload').css({
-    visibility: 'visible',
-    position: 'absolute'
-  }).animate({
-    'top': downloadPos.top + "px",
-    'left': downloadPos.left + "px"
-  });
 }
