@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var Note = require(__dirname + '/public/javascripts/note_model.js');
 
-
+mongoose.connect('mongodb://taoduo:Bonanza2016@ds015508.mongolab.com:15508/mynotes');
 var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -35,23 +35,6 @@ app.use('/checknotes', checknotes);
 app.use('/newnotes', newnotes);
 app.use('/visionProtector', visionProtector);
 
-// get the data
-app.post('/getdata', function(req, res, next) {
-  mongoose.connect('mongodb://taoduo:Bonanza2016@ds015508.mongolab.com:15508/mynotes');
-	var db = mongoose.connection;
-	db.on('error', console.error.bind(console, 'connection error:'));
-	db.once('open', function(callback) {
-		Note.find({}, function(err, notes) {
-			if(err) {
-				console.log('error in query:' + err);
-				return;
-			}
-			mongoose.connection.close();
-			notes = notes.reverse();
-			res.end(JSON.stringify(notes));
-		}).sort('date');
-	});
-});
 //login
 app.post('/adm', function(req, res, next) {
   if(req.body.pw === 'duotao'){

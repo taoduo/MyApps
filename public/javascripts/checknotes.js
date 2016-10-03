@@ -1,6 +1,5 @@
 var noteMap = {};
 var enterTrack = "";
-var url = "https://duos-personal-apps.herokuapp.com/";
 
 $(document).ready(function() {
   init();
@@ -41,7 +40,7 @@ function init() {
     ]
   });
 
-  $.post( url + 'getdata', function( data ) {
+  $.post('/checknotes/getdata', function( data ) {
     var tempData = JSON.parse(data);
     for(i in tempData) {
       noteMap[tempData[i]._id] = tempData[i];
@@ -263,9 +262,10 @@ function editFormSubmit() {
 }
 
 function stringMatch(smallStr, bigStr) {
-  var match = 0;
-  var small = smallStr.toLowerCase();
-  var big = bigStr.toLowerCase();
+  if (smallStr.length == 0 || bigStr.length == 0) {
+    return 0;
+  }
+  var match = 0, small = smallStr.toLowerCase(), big = bigStr.toLowerCase();
   var startIndex = 0, smallStrLen = smallStr.length;
   var index;
   while ((index = bigStr.indexOf(smallStr, startIndex)) > -1) {
@@ -276,14 +276,16 @@ function stringMatch(smallStr, bigStr) {
 }
 
 function getRelevance(search, note) {
-  var relevance;
-  var r1 = stringMatch(search, note.tag);
-  var r2 = stringMatch(search, note.title);
-  var r3 = 0;
-  for(var k in note.keywords){
-    r3 += stringMatch(search, note.keywords[k]);
+  var relevance = 0;
+  var keys = search.split(" ");
+  for (var i in keys) {
+    var key = keys[i];
+    var r1 = stringMatch(key, note.tag), r2 = stringMatch(key, note.title), r3 = 0;
+    for(var k in note.keywords){
+      r3 += stringMatch(key, note.keywords[k]);
+    }
+    var r4 = stringMatch(key, note.details);
+    relevance += r1 * 3 + r2 * 5 + r3 * 4 + r4;
   }
-  var r4 = stringMatch(search, note.details);
-  relevance = r1 * 3 + r2 * 5 + r3 * 4 + r4;
   return relevance;
 }
