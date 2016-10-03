@@ -3,6 +3,7 @@ I love developing web apps! When there are too many of them, I need a place to c
 [Heroku](https://duosapp.herokuapp.com/).
 
 [![Here is an outdated video](http://img.youtube.com/vi/Qyi5vr4eFMQ/0.jpg)](https://youtu.be/Qyi5vr4eFMQ)
+
 I am sorry the video is outdated. I should have get a new one, but I am too busy these days.
 ## Completed Apps
 
