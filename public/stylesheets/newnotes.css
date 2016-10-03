@@ -1,0 +1,10 @@
+.pageheader h1 {
+  color:blue;
+  display:inline;
+}
+
+.pageheader a {
+  position:absolute;
+  right:20px;
+  margin-bottom:20px;
+}

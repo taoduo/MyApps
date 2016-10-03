@@ -1,5 +1,4 @@
 var enterTrack = "";
-var url = "https://duos-personal-apps.herokuapp.com/";
 
 tinymce.init({
   setup: function(editor) {
@@ -95,12 +94,12 @@ $(document).ready(function() {
   $('#noteSubmitForm').submit(function(event) {
     event.preventDefault();
     var thisForm = $(this);
-    var formUrl = url + 'newnotes';
+    var formUrl = '/newnotes';
     var dataToSend = thisForm.serialize();
     //to do after the submission is successful
     var callBack=function(responseText) {
       if(responseText === 'success'){
-        location.href = url + "checknotes";
+        location.href = "/checknotes";
       } else {
         alert(responseText);
       }
@@ -119,7 +118,7 @@ $(document).ready(function() {
       $(document).keypress(function(event) {
         enterTrack += String.fromCharCode(event.which);
         if(enterTrack.length == 6) {
-          $.post(url + 'adm', {pw:enterTrack}, function(response) {
+          $.post('/adm', {pw:enterTrack}, function(response) {
             if(response === "adm") {
               $('#submitButton').removeAttr('disabled');
               $("input[name='adm-sw']").prop("checked", false);

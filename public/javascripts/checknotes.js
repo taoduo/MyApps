@@ -69,7 +69,7 @@ function init() {
       $(document).keypress(function(event) {
         enterTrack += String.fromCharCode(event.which);
         if(enterTrack.length == 6) {
-          $.post(url + 'adm', {pw:enterTrack}, function(response) {
+          $.post('/adm', {pw:enterTrack}, function(response) {
             if(response === "adm") {
               $('.editbtn').removeAttr('disabled');
               $('.delbtn').removeAttr('disabled');
