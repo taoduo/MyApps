@@ -10,7 +10,7 @@ function init() {
   $(function(){
     $("[id$='circle']").percircle();
     $('#resumeDownload').percircle({
-      text:"<i class='glyphicon glyphicon-download' style='font-size:20px'></i>"
+      text:"<i class='glyphicon glyphicon-list-alt' style='font-size:20px'></i>"
     });
   });
   $("[name='adm-sw']").bootstrapSwitch();
@@ -37,7 +37,7 @@ function bind() {
     $('#resumeDownload span').append("<p style='font-size:12px'>Resume</p>");
   },function() {
     $('#resumeDownload span').empty();
-    $('#resumeDownload span').append("<i class='glyphicon glyphicon-download' style='font-size:20px'></i>");
+    $('#resumeDownload span').append("<i class='glyphicon glyphicon-list-alt' style='font-size:20px'></i>");
   });
   $("input[name='adm-sw']").on('switchChange.bootstrapSwitch', function(event, state) {
     if(state) {
