@@ -18,9 +18,8 @@ html
 		- var page = 1;
 		include partials/navbar
 		.container-fluid
-			.page-header
-				.row
-					h1.col-sm-3(style="color:blue;margin-top:0px ") Check Notes
+				.row.pageheader
+					h1.col-sm-3 Check Notes
 					input#searchInput.col-sm-8.form-control(style='width:50%;margin-left:10px;margin-right:10px;display:inline;position:absolute' type='text' placeholder='Search')
 					a.col-sm-2(type="button" class="btn btn-primary" href="/newnotes" style="position:absolute; right:20px; margin-bottom:0px margin-left:10px") Add New Notes
 		.container
