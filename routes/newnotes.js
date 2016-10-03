@@ -27,21 +27,14 @@ router.post('/', function(req, res, next) {
   		date: date,
   		tag: tag,
   	});
-  	mongoose.connect('mongodb://taoduo:Bonanza2016@ds015508.mongolab.com:15508/mynotes');
-  	var db = mongoose.connection;
-  	db.on('error', console.error.bind(console, 'connection error:'));
-  	db.once('open', function(callback) {
-  		newNote.save(function (err, data) {
-  			if (err) {
-  				console.log(err);
-  			} else {
-  				mongoose.connection.close();
-  				console.log('Saved : ', data);
-  				mongoose.disconnect();
-  			}
-        res.end('success');
-  		});
-  	});
+		newNote.save(function (err, data) {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('Saved : ', data);
+			}
+      res.end('success');
+		});
   } else {
     res.end('Only Duo can write new notes.');
   }

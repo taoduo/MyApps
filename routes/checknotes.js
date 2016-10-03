@@ -32,7 +32,6 @@ router.post('/', function(req, res, next) {
   	var id = matches[2];
 		Note.findById(id, function (err, note) {
 			if (err) {
-				mongoose.connection.close();
 				console.log(err);
 				return;
 			} else {

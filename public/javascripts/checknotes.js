@@ -91,7 +91,7 @@ function bind() {
   $('#editform').submit(function(event) {
     event.preventDefault();
     var thisForm=$(this);
-    var formUrl = url + 'checknotes';
+    var formUrl = '/checknotes';
     var dataToSend=thisForm.serialize();
     //to do after the editing is successful
     var callBack=function(responseText) {
@@ -133,7 +133,7 @@ function bind() {
     var regex = /(.*)delbtn/;
     var id = $(this).attr('id').match(regex)[1];
     $.ajax({
-      url: url + 'checknotes',
+      url: '/checknotes',
       method: 'delete',
       data: {'id':id},
       beforeSend: function(){

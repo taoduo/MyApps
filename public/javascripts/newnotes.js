@@ -99,7 +99,8 @@ $(document).ready(function() {
     //to do after the submission is successful
     var callBack=function(responseText) {
       if(responseText === 'success'){
-        location.href = "/checknotes";
+
+        window.location.href = "/checknotes";
       } else {
         alert(responseText);
       }
