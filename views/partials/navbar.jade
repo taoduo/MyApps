@@ -9,19 +9,45 @@ nav.navbar.navbar-default
       a.navbar-brand(href='/') Personal Website
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav
-        case page
-          when 0
-            li.active
-              a(href='/newnotes') New Notes
-            li
-              a(href='/checknotes') Check Notes
-          when 1
-            li
-              a(href='/newnotes') New Notes
-            li.active
-              a(href='/checknotes') Check Notes
-          default
-            li
-              a(href='/newnotes') New Notes
-            li
-              a(href='/checknotes') Check Notes
+        if page == 0 || page == 1
+          li.dropdown.active
+            a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
+              | Dropdown 
+              span.caret
+            ul.dropdown-menu
+              if page == 0
+                li.active
+                  a(href='/newnotes') New Notes
+              else
+                li
+                  a(href='/newnotes') New Notes
+              if page == 1
+                li.active
+                  a(href='/checknotes') Check Notes
+              else
+                li
+                  a(href='/checknotes') Check Notes
+        else
+          li.dropdown
+            a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
+              | Dropdown 
+              span.caret
+            ul.dropdown-menu
+              if page == 0
+                li
+                  a(href='/newnotes') New Notes
+              else
+                li
+                  a(href='/newnotes') New Notes
+              if page == 1
+                li
+                  a(href='/checknotes') Check Notes
+              else
+                li
+                  a(href='/checknotes') Check Notes
+        if page == 2
+          li.active
+            a(href='/visionProtector') Vision Protector
+        else
+          li
+            a(href='/visionProtector') Vision Protector
