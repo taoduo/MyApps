@@ -1,7 +1,6 @@
 var dragTrackTop = 0;
 var dragTrackLeft = 0;
 var enterTrack = "";
-var url = "https://duos-personal-apps.herokuapp.com/";
 $(document).ready(function() {
   init();
   bind();
@@ -32,32 +31,7 @@ function bind() {
     },100);
     return true;
   });
-  //needs to track the download progress
-  $('#resumeDownload').click(function(e) {
-    var flag = $(this).data('percent') == 0 ? true: false;
-    if(flag) {
-      var a = document.createElement("A");
-      a.setAttribute("download", "DuoTaoResume.pdf");
-      a.setAttribute("href", "DuoTaoResume.pdf");
-      a.click();
-      var degree = 180;
-      $(this).removeClass('gt50');
-      $('.bar').css({
-        '-webkit-transform' : 'rotate(' + degree + 'deg)',
-        '-moz-transform'    : 'rotate(' + degree + 'deg)',
-        '-ms-transform'     : 'rotate(' + degree + 'deg)',
-        '-o-transform'      : 'rotate(' + degree + 'deg)',
-        'transform'         : 'rotate(' + degree + 'deg)'
-      });
-      setTimeout(rotationHelper,210);
-      $(this).data('percent', 100);
-    } else {
-      var a = document.createElement("A");
-      a.setAttribute("download", "DuoTaoResume.pdf");
-      a.setAttribute("href", "DuoTaoResume.pdf");
-      a.click();
-    }
-  });
+
   $('#resumeDownload').hover(function() {
     $('#resumeDownload span').empty();
     $('#resumeDownload span').append("<p style='font-size:12px'>Resume</p>");
@@ -82,35 +56,4 @@ function bind() {
       $(document).off('keypress');
     }
   });
-}
-
-function rotationHelper() {
-  console.log('called');
-  var degree = 360;
-  $('#resumeDownload').addClass('gt50');
-  $('.bar').css({
-    '-webkit-transform' : 'rotate(' + degree + 'deg)',
-    '-moz-transform'    : 'rotate(' + degree + 'deg)',
-    '-ms-transform'     : 'rotate(' + degree + 'deg)',
-    '-o-transform'      : 'rotate(' + degree + 'deg)',
-    'transform'         : 'rotate(' + degree + 'deg)'
-  });
-}
-function binaryRand() {
-  return Math.random() > 0.5 ? 1 : 0;
-}
-function getRandomColor() {
-  var letters = '0123456789ABCDEF'.split('');
-  var color = '#';
-  for (var i = 0; i < 6; i++ ) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-Object.size = function(obj) {
-  var size = 0, key;
-  for (key in obj) {
-    if (obj.hasOwnProperty(key)) size++;
-  }
-  return size;
 }

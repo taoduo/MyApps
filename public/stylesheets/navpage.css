@@ -7,8 +7,8 @@
   z-index: -10;
 }
 
-.app {
-  width: 200px;
+.app:hover {
+  text-decoration: none;
 }
 h5.app-name {
   font-family: "Comic Sans MS", cursive, sans-serif;
@@ -23,7 +23,6 @@ h5.app-name {
 i.app-icon {
   font-size:120px;
   color:black;
-  text-shadow:2px 2px 4px #000000;
   cursor:pointer
 }
 
