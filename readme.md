@@ -1,27 +1,26 @@
-# My Personal Website
-I have my youtube video here.
-This project has been deployed on [Heroku](https://duos-personal-apps.herokuapp.com/).
+# My Web Toolbox
+I love developing web apps! When there are too many of them, I need a place to collect them all, and this is what I get - My Web Toolbox! It collects and organizes those small apps I made for myself to assist me in daily task. You can check them out at
+[Heroku](https://duosapp.herokuapp.com/).
 
-[![Alt text for your video](http://img.youtube.com/vi/Qyi5vr4eFMQ/0.jpg)](https://youtu.be/Qyi5vr4eFMQ)
+[![Here is an outdated video](http://img.youtube.com/vi/Qyi5vr4eFMQ/0.jpg)](https://youtu.be/Qyi5vr4eFMQ)
+I am sorry the video is outdated. I should have get a new one, but I am too busy these days.
+## Completed Apps
 
-## Functional Description
-It primarily serves as my toolbox containing all applications I built for my own use. It is a dynamic project, which means I will put it here whenever I think of something useful and doable. The cover page and the tech learning notebook is ready. Here is my general plan for the time being.
-* Cover Page (finished)
-* Tech Notebook (finished)
-*  Online Interactive Resume (I also have a static resume at www.goldenduo.com) (Coming)
-*  Scheduler and task manager: check my schedule, make appointment with me and keep track of what I need to do everyday
-*  Do some data-crawling for me such as keep track of the lastest tech news.
-*  Manage my accounts on all those websites. I often forget the password.
-*  Some IoT projects, such as an application that makes a plot of my weight, which is directly uploaded from my scale when I use it.
+1. Home Page
+![Home Page Image](/public/images/readme1.png "Home Page")
 
-## What I Used
-I developed this website using expressjs and mongodb and some frontend libraries.
+2. Tech Notebook
+ * Check the Notes
+![Tech Notebook Image](./public/images/readme2.png "Check the Notes")
+ * Take new Notes
+![Tech Notebook Image](./public/images/readme4.png "Take a Note")
+3. Vision Protector
+![Tech Notebook Image](/public/images/readme3.png "Vision Protector")
 
-## Run the Notebook
-To run the notebook, first set up mongodb (I have a database called test at the backend. For details of the database, please check note_model.js) and nodejs. Then just pull and start it on your localhost with
-```
-npm install
-npm start
-```
+## Frameworks & Database
+Node.js & Jquery & MongoDB
+
+## Contact
+If you have any questions: feel free to email me at taod@carleton.edu.
 Thank you!
 Duo Tao
