@@ -32,12 +32,6 @@ function bind() {
     },100);
     return true;
   });
-  $('#notebook').click(function() {
-    location.href = url + "checknotes";
-  });
-	$('#visionProtector').click(function() {
-    location.href = url + "visionProtector";
-  });
   //needs to track the download progress
   $('#resumeDownload').click(function(e) {
     var flag = $(this).data('percent') == 0 ? true: false;
