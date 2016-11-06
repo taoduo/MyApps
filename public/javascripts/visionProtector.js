@@ -1,69 +1,8 @@
 /*javascript for the timer, inside the frame*/
 var timer;
-/*class Timer {
-	constructor(context) {
-		this.context = context;
-		breakFlag = false;
-		this.formatTimeElement = function(time){
-			return time < 10 ? "0" + time : time;
-		};
-		this.countDownByOneSecond = function() {
-			this.time = new Date(this.time.getTime() - 1000);
-			this.context.find('#minute').text(this.formatTimeElement(this.time.getMinutes()));
-			this.context.find('#second').text(this.formatTimeElement(this.time.getSeconds()));
-			if(this.time <= new Date(0,0,0,0,0,0)) {
-				this.timerAlert();
-				return;
-			}
-		};
-	}
+const kDEFAULT_WORK_TIME_MIN = 20;
+const kDEFAULT_BREAK_TIME_SEC = 20;
 
-	setStartTime(min, sec) {
-		if (min > 60) {
-			console.log("does not work for more than 60 minutes");
-		}
-		this.time = new Date(0,0,0,0,min,sec);
-		this.context.find('#minute').text(this.formatTimeElement(this.time.getMinutes()));
-		this.context.find('#second').text(this.formatTimeElement(this.time.getSeconds()));
-	}
-
-	startTimer() {
-		var t = this;
-		this.counter = setInterval(function() {
-			t.countDownByOneSecond();
-		}, 1000);
-	}
-
-	timerAlert() {
-		clearInterval(this.counter);
-		if (!breakFlag) {
-			this.context.css('color','red');
-			$('#beep').get(0).play();
-			alert("Take a break!");
-			breakFlag = true;
-			this.setStartTime(0,20);
-			this.startTimer();
-		} else {
-			this.context.css('color','black');
-			$('#beep').get(0).play();
-			alert("Continue working~");
-			breakFlag = true;
-			this.setStartTime(20,0);
-			this.startTimer();
-		}
-	}
-
-	pause() {
-		clearInterval(this.counter);
-	}
-
-	resume() {
-		var t = this;
-		this.counter = setInterval(function() {
-			t.countDownByOneSecond();
-		}, 1000);
-	}
-}*/
 function Timer(context) {
 	//private variables
 	var context = context;
@@ -79,7 +18,7 @@ function Timer(context) {
 		time = new Date(time.getTime() - 1000);
 		context.find('#minute').text(formatTimeElement(time.getMinutes()));
 		context.find('#second').text(formatTimeElement(time.getSeconds()));
-		if(time <= new Date(0,0,0,0,0,0)) {
+		if(time <= new Date(0, 0, 0, 0, 0, 0)) {
 			timerAlert();
 			return;
 		}
@@ -92,16 +31,20 @@ function Timer(context) {
 			$('#beep').get(0).play();
 			alert("Take a break!");
 			breakFlag = true;
-			t.setStartTime(0,20);
+			t.setStartTime(0, kDEFAULT_BREAK_TIME_SEC);
 			t.startTimer();
 		} else {
 			context.css('color','black');
 			$('#beep').get(0).play();
 			alert("Continue working~");
 			breakFlag = false;
-			t.setStartTime(20,0);
+			t.setStartTime(kDEFAULT_WORK_TIME_MIN, 0);
 			t.startTimer();
 		}
+	}
+
+	function resetTimer() {
+		t.setStartTime($('#time').val(), 0);
 	}
 	//member functions
 	this.setStartTime = function(min, sec) {
@@ -128,6 +71,14 @@ function Timer(context) {
 			countDownByOneSecond();
 		}, 1000);
 	};
+
+	this.restart = function() {
+		resetTimer();
+		clearInterval(this.counter);
+		this.counter = setInterval(function() {
+			countDownByOneSecond();
+		}, 1000);
+	}
 }
 
 function bind() {
@@ -142,7 +93,14 @@ function bind() {
 		$("#pauseBtn").prop('disabled', false);
 		$("#resumeBtn").prop('disabled', true);
 	});
+
+	$("#restartBtn").click(function() {
+		timer.restart();
+		$("#pauseBtn").prop('disabled', false);
+		$("#resumeBtn").prop('disabled', true);
+	});
 }
+
 $(window).load(function() {
 	timer = new Timer($('#timer'));
 	//adjust the timer position within the frame
